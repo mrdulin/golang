@@ -13,7 +13,7 @@ type updateStatusResult struct {
 }
 
 func updateStatus(id int, ch chan updateStatusResult, wg *sync.WaitGroup) {
-	fmt.Printf("update status with id = %d\n", id)
+	//fmt.Printf("update status with id = %d\n", id)
 	defer wg.Done()
 	if id > 2 {
 		ch <- updateStatusResult{Payload: nil, Error: errors.New(fmt.Sprintf("update status with id = %d error", id))}
@@ -46,5 +46,12 @@ func updateAllStatus() []updateStatusResult {
 
 func main() {
 	results := updateAllStatus()
-	log.Printf("%+v", results)
+	//log.Printf("%+v", results)
+	for _, result := range results {
+		if result.Error != nil {
+			log.Printf("%v\n", result.Error)
+			continue
+		}
+		log.Printf("%v\n", result.Payload)
+	}
 }
