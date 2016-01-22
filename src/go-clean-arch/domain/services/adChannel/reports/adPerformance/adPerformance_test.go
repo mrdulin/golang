@@ -1,4 +1,4 @@
-package services
+package adPerformance
 
 import (
 	models "go-clean-arch/domain/models/adChannel"

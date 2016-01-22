@@ -3,17 +3,17 @@ package transaction
 import (
 	"database/sql"
 	"github.com/jmoiron/sqlx"
-	"log"
 	"github.com/pkg/errors"
+	"log"
 )
 import (
 	"github.com/icrowley/fake"
 )
 
 type User struct {
-	UserID int `db:"user_id"`
-	UserNme string `db:"user_nme"`
-	UserEmail string `db:"user_email"`
+	UserID        int           `db:"user_id"`
+	UserNme       string        `db:"user_nme"`
+	UserEmail     string        `db:"user_email"`
 	UserAddressId sql.NullInt64 `db:"user_address_id"`
 }
 
@@ -51,4 +51,3 @@ func (ts *TransactionSamples) CreateUserTransaction() (*User, error) {
 	}
 	return &user, nil
 }
-

@@ -1,11 +1,11 @@
-package services
+package adPerformance
 
 import (
 	"bytes"
 	"encoding/json"
 	"encoding/xml"
 	models "go-clean-arch/domain/models/adChannel"
-	"go-clean-arch/domain/repositories"
+	"go-clean-arch/domain/services"
 	"io/ioutil"
 	"net/http"
 	"strconv"
@@ -16,7 +16,7 @@ import (
 type IAdPerformanceReportService interface {
 	Get(reportDefinition ...models.ReportDefinition) (*models.AdPerformanceReport, error)
 	FormReportDefinition(campaignIds []int) models.ReportDefinition
-	UpdateStatusTransaction(rows []*models.AdPerformanceReportRow) error
+	UpdateStatusTransaction(rows []models.AdPerformanceReportRow) error
 }
 
 type AdPerformanceReportServiceOptions struct {
@@ -24,7 +24,7 @@ type AdPerformanceReportServiceOptions struct {
 	RefreshToken     string
 	BaseURL          string
 
-	campaignResultRepo repositories.CampaignResultRepository
+	campaignResultService services.ICampaignResultService
 }
 
 type AdPerformanceReportService struct {
@@ -113,9 +113,9 @@ func (svc *AdPerformanceReportService) FormReportDefinition(campaignIds []int) m
 	}
 }
 
-func (svc *AdPerformanceReportService) UpdateStatusTransaction(rows []*models.AdPerformanceReportRow) error {
+func (svc *AdPerformanceReportService) UpdateStatusTransaction(rows []models.AdPerformanceReportRow) error {
 
-	err := svc.options.campaignResultRepo.UpdateStatusTransaction()
+	err := svc.options.campaignResultService.UpdateStatusTransaction(rows)
 	if err != nil {
 		return errors.Wrap(err, "svc.options.campaignResultRepo.UpdateStatusTransaction()")
 	}

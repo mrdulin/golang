@@ -1,11 +1,12 @@
 package services
 
 import (
+	models "go-clean-arch/domain/models/adChannel"
 	"go-clean-arch/domain/repositories"
 )
 
-type ICampaignResultService interface{
-
+type ICampaignResultService interface {
+	UpdateStatusTransaction(rows []models.AdPerformanceReportRow) error
 }
 
 type CampaignResultService struct {
@@ -16,3 +17,9 @@ func NewCampaignResultService(campaignResultRepo repositories.CampaignResultRepo
 	return &CampaignResultService{campaignResultRepo}
 }
 
+func (svc *CampaignResultService) UpdateStatusTransaction(rows []models.AdPerformanceReportRow) error {
+	for _, row := range rows {
+		return svc.campaignResultRepo.UpdateStatusTransaction(row)
+	}
+	return nil
+}

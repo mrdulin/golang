@@ -11,7 +11,7 @@ type IApplicationConfig interface {
 	Load() (*viper.Viper, error)
 }
 
-type ApplicationConfig struct {}
+type ApplicationConfig struct{}
 
 func NewApplicationConfig() IApplicationConfig {
 	return &ApplicationConfig{}
