@@ -7,7 +7,6 @@ type IBaseReportService interface {
 }
 
 type BaseReportService struct {
-
 }
 
 func NewBaseReportService() IBaseReportService {
@@ -17,5 +16,3 @@ func NewBaseReportService() IBaseReportService {
 func (svc *BaseReportService) GetRows(report models.BaseReport) []interface{} {
 	return report.Table.Row
 }
-
-

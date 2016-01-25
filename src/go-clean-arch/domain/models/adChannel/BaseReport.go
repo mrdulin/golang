@@ -13,15 +13,14 @@ type DateRange struct {
 }
 
 type Table struct {
-	Text string `xml:",chardata"`
+	Text string        `xml:",chardata"`
 	Row  []interface{} `xml:"row"`
 }
 
 type BaseReport struct {
-	XMLName    xml.Name `xml:"report"`
-	Text       string   `xml:",chardata"`
+	XMLName    xml.Name   `xml:"report"`
+	Text       string     `xml:",chardata"`
 	ReportName ReportName `xml:"report-name"`
-	DateRange DateRange `xml:"date-range"`
-	Table Table `xml:"table"`
+	DateRange  DateRange  `xml:"date-range"`
+	Table      Table      `xml:"table"`
 }
-

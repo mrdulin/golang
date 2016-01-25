@@ -1,5 +1,5 @@
 package repositories
 
 type CampaignResultRepository interface {
-	UpdateStatusTransaction()
+	UpdateStatusTransaction() error
 }

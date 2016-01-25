@@ -4,22 +4,27 @@ import (
 	"bytes"
 	"encoding/json"
 	"encoding/xml"
-	"github.com/pkg/errors"
-	"go-clean-arch/domain/models/adChannel"
+	models "go-clean-arch/domain/models/adChannel"
+	"go-clean-arch/domain/repositories"
 	"io/ioutil"
 	"net/http"
 	"strconv"
+
+	"github.com/pkg/errors"
 )
 
 type IAdPerformanceReportService interface {
 	Get(reportDefinition ...models.ReportDefinition) (*models.AdPerformanceReport, error)
 	FormReportDefinition(campaignIds []int) models.ReportDefinition
+	UpdateStatusTransaction(rows []*models.AdPerformanceReportRow) error
 }
 
 type AdPerformanceReportServiceOptions struct {
 	ClientCustomerId int
-	RefreshToken string
-	BaseURL string
+	RefreshToken     string
+	BaseURL          string
+
+	campaignResultRepo repositories.CampaignResultRepository
 }
 
 type AdPerformanceReportService struct {
@@ -30,7 +35,6 @@ func NewAdPerformanceReportService(options AdPerformanceReportServiceOptions) IA
 	options.BaseURL = options.BaseURL + "/google/report/AdPerformance"
 	return &AdPerformanceReportService{options}
 }
-
 
 func (svc *AdPerformanceReportService) Get(reportDefinition ...models.ReportDefinition) (*models.AdPerformanceReport, error) {
 	var body = models.ReportDefinition{
@@ -68,6 +72,7 @@ func (svc *AdPerformanceReportService) Get(reportDefinition ...models.ReportDefi
 	}
 
 	report := models.AdPerformanceReport{}
+	// TODO: content = {code: 2000, message: 'xxx'}
 	err = xml.Unmarshal(content, &report)
 	if err != nil {
 		return nil, errors.Wrap(err, "xml.Unmarshal(content, &report)")
@@ -99,11 +104,20 @@ func (svc *AdPerformanceReportService) FormReportDefinition(campaignIds []int) m
 			},
 			Predicates: []models.Predicate{
 				{
-					Field: "CampaignId",
-					Operator: models.IN,
-					Values: campaignStrIds,
+					Field:    "CampaignId",
+					Operator: models.IN, // TODO: add namespace like: models.Operator.IN
+					Values:   campaignStrIds,
 				},
 			},
 		},
 	}
+}
+
+func (svc *AdPerformanceReportService) UpdateStatusTransaction(rows []*models.AdPerformanceReportRow) error {
+
+	err := svc.options.campaignResultRepo.UpdateStatusTransaction()
+	if err != nil {
+		return errors.Wrap(err, "svc.options.campaignResultRepo.UpdateStatusTransaction()")
+	}
+	return nil
 }

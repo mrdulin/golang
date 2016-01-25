@@ -13,6 +13,7 @@ func NewCampaignResultRepository(Db *sql.DB) repositories.CampaignResultReposito
 	return &CampaignResultRepository{Db}
 }
 
-func (repo *CampaignResultRepository) UpdateStatusTransaction() {
-	
+func (repo *CampaignResultRepository) UpdateStatusTransaction() error {
+
+	return nil
 }

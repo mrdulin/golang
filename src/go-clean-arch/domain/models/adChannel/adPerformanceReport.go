@@ -17,7 +17,7 @@ type AdPerformanceReportRow struct {
 type AdPerformanceReport struct {
 	BaseReport
 	Table struct {
-		Text string `xml:",chardata"`
+		Text string                   `xml:",chardata"`
 		Row  []AdPerformanceReportRow `xml:"row"`
 	} `xml:"table"`
 }

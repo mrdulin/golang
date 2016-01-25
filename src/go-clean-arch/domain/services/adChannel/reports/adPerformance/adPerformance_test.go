@@ -9,7 +9,7 @@ import (
 )
 
 var (
-	options AdPerformanceReportServiceOptions
+	options              AdPerformanceReportServiceOptions
 	adPerformanceService IAdPerformanceReportService
 )
 
@@ -24,9 +24,9 @@ func init() {
 		log.Fatal(err)
 	}
 	options = AdPerformanceReportServiceOptions{
-		BaseURL: viper.GetString("AD_CHANNEL_API"),
+		BaseURL:          viper.GetString("AD_CHANNEL_API"),
 		ClientCustomerId: ClientCustomerId,
-		RefreshToken: viper.GetString("RefreshToken"),
+		RefreshToken:     viper.GetString("RefreshToken"),
 	}
 	adPerformanceService = NewAdPerformanceReportService(options)
 }
@@ -73,10 +73,9 @@ func TestGetRowsOfReport(t *testing.T) {
 	reportDefinition := adPerformanceService.FormReportDefinition(campaignIds)
 	report, err := adPerformanceService.Get(reportDefinition)
 	if err != nil {
-		t.Error(err)
+		t.Errorf("%+v", err)
 		return
 	}
 	rows := report.GetRows()
 	t.Logf("%+v", rows)
 }
-
