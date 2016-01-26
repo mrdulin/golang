@@ -8,9 +8,9 @@ const (
 )
 
 type Predicate struct {
-	Field string
-	Operator Operator
-	Values []string
+	Field string `json:"field"`
+	Operator Operator `json:"operator"`
+	Values []string	`json:"values"`
 }
 
 type Selector struct {

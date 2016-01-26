@@ -13,6 +13,7 @@ import (
 
 type IAdPerformanceReportService interface {
 	Get(reportDefinition ...models.ReportDefinition) (*models.AdPerformanceReport, error)
+	FormReportDefinition(campaignIds []int) models.ReportDefinition
 }
 
 type AdPerformanceReportServiceOptions struct {
@@ -29,6 +30,7 @@ func NewAdPerformanceReportService(options AdPerformanceReportServiceOptions) IA
 	options.BaseURL = options.BaseURL + "/google/report/AdPerformance"
 	return &AdPerformanceReportService{options}
 }
+
 
 func (svc *AdPerformanceReportService) Get(reportDefinition ...models.ReportDefinition) (*models.AdPerformanceReport, error) {
 	var body = models.ReportDefinition{
@@ -72,4 +74,36 @@ func (svc *AdPerformanceReportService) Get(reportDefinition ...models.ReportDefi
 	}
 
 	return &report, nil
+}
+
+func (svc *AdPerformanceReportService) FormReportDefinition(campaignIds []int) models.ReportDefinition {
+	var campaignStrIds []string
+
+	for _, campaignId := range campaignIds {
+		campaignStrIds = append(campaignStrIds, strconv.Itoa(campaignId))
+	}
+
+	return models.ReportDefinition{
+		Selector: models.Selector{
+			Fields: []string{
+				"AdGroupName",
+				"AdGroupId",
+				"AdGroupStatus",
+				"AdType",
+				"CampaignId",
+				"CampaignName",
+				"CampaignStatus",
+				"CombinedApprovalStatus",
+				"Id",
+				"Status",
+			},
+			Predicates: []models.Predicate{
+				{
+					Field: "CampaignId",
+					Operator: models.IN,
+					Values: campaignStrIds,
+				},
+			},
+		},
+	}
 }

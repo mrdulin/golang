@@ -15,7 +15,7 @@ func NewCampaignRepository(Db *sqlx.DB) repositories.CampaignRepository {
 	return &CampaignRepository{Db}
 }
 
-func (cr *CampaignRepository) FindById(id string) (models.Campaign, error) {
+func (cr *CampaignRepository) FindById(id string) (*models.Campaign, error) {
 	campaign := models.Campaign{}
 	query := `
 		SELECT
@@ -26,13 +26,13 @@ func (cr *CampaignRepository) FindById(id string) (models.Campaign, error) {
 	`
 	err := cr.Db.Get(&campaign, query, id)
 	if err != nil {
-		return campaign, err
+		return nil, err
 	}
-	return campaign, nil
+	return &campaign, nil
 }
 
-func (cr *CampaignRepository) FindValidGoogleCampaign() ([]models.Campaign, error) {
-	var campaigns []models.Campaign
+func (cr *CampaignRepository) FindValidGoogleCampaign() ([]*models.Campaign, error) {
+	var campaigns []*models.Campaign
 
 	query := `
 		select 
@@ -59,7 +59,7 @@ func (cr *CampaignRepository) FindValidGoogleCampaign() ([]models.Campaign, erro
 			return nil, errors.Wrap(err, "rows.StructScan")
 		}
 
-		campaigns = append(campaigns, campaign)
+		campaigns = append(campaigns, &campaign)
 	}
 
 	return campaigns, nil
