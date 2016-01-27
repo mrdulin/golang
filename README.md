@@ -1,7 +1,7 @@
 # go
 
-## 相关资源链接地址
+## references
 
-https://play.golang.org/
-
-https://gobyexample.com/
+- https://play.golang.org/
+- https://gobyexample.com/
+- https://golangbot.com
