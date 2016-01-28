@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"log"
 
-	models "github.com/mrdulin/golang/go-clean-arch/domain/models/user"
-	"github.com/mrdulin/golang/go-clean-arch/infrastructure/database"
+	models "go-clean-arch/domain/models/user"
+	"go-clean-arch/infrastructure/database"
 )
 
 func main() {

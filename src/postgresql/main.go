@@ -69,7 +69,7 @@ func insertUser(db *sql.DB) (userPO, error) {
 	`
 
 	var userPO userPO
-	err := db.QueryRow(sql, rand.Intn(1000), faker.Name(), faker.Email(), rand.Intn(1000)).Scan(&userPO.user_id, &userPO.user_nme, &userPO.user_email, &userPO.user_address_id)
+	err := db.QueryRow(sql, rand.Intn(1000), faker.NAME, faker.Email, rand.Intn(1000)).Scan(&userPO.user_id, &userPO.user_nme, &userPO.user_email, &userPO.user_address_id)
 
 	return userPO, err
 }
