@@ -1,11 +1,11 @@
 package main
 
 import (
-	"log"
 	"fmt"
+	"log"
+
 	models "github.com/mrdulin/golang/go-clean-arch/domain/models/user"
 	"github.com/mrdulin/golang/go-clean-arch/infrastructure/database"
-
 )
 
 func main() {
