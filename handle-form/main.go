@@ -38,14 +38,26 @@ func login(w http.ResponseWriter, r *http.Request) {
 func selectFormController(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("method: ", r.Method)
 	if r.Method == "GET" {
+		tpl, err := template.ParseFiles("select-form.html")
+		if err != nil {
+			http.Error(w, err.Error(), 500)
+			return
+		}
+		if err := tpl.Execute(w, nil); err != nil {
+			http.Error(w, err.Error(), 500)
+		}
+	} else if r.Method == "POST" {
+
 	}
 }
 
 func main() {
+	const PORT int = 9090
 	http.HandleFunc("/", sayHelloName)
 	http.HandleFunc("/login", login)
 	http.HandleFunc("/select", selectFormController)
-	err := http.ListenAndServe(":9090", nil)
+	log.Println(fmt.Sprintf("Staring http server on http://localhost:%d", PORT))
+	err := http.ListenAndServe(fmt.Sprintf(":%d", PORT), nil)
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)
 	}
