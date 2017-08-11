@@ -4,4 +4,5 @@ import "go-clean-arch/domain/models"
 
 type CampaignRepository interface {
 	FindById(id string) (models.Campaign, error)
+	FindValidGoogleCampaign() ([]models.Campaign, error)
 }

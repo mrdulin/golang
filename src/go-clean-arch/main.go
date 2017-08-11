@@ -3,9 +3,9 @@ package main
 import (
 	"fmt"
 	"github.com/spf13/viper"
+	"go-clean-arch/domain/services"
 	"go-clean-arch/infrastructure/database"
 	"go-clean-arch/interfaces/repositories"
-	"go-clean-arch/domain/services"
 	"log"
 )
 
@@ -55,12 +55,22 @@ func main() {
 
 	googleAccountRepo := repositories.NewGoogleAccountRepository(db)
 	locationRepo := repositories.NewLocationRepository(db)
+	campaignRepo := repositories.NewCampaignRepository(db)
+
 	googleAccountService := services.NewGoogleAccountService(googleAccountRepo, locationRepo)
+	campaignService := services.NewCampaignService(campaignRepo)
+
 	_, err = googleAccountService.FindGoogleAccountsForReport()
-	//googleAccounts, err := googleAccountService.FindGoogleAccountsForReport()
+	checkError(err)
+	//log.Printf("%#v", googleAccounts)
+
+	googleCampaignIds, err := campaignService.FindValidGoogleCampaignIds()
+	checkError(err)
+	log.Printf("%#v", googleCampaignIds)
+}
+
+func checkError(err error) {
 	if err != nil {
 		panic(err)
 	}
-	//fmt.Printf("%#v", googleAccounts)
-
 }

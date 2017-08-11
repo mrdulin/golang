@@ -4,7 +4,7 @@ import "time"
 
 type GoogleAccount struct {
 	GoogleAccountId int `db:"google_account_id"`
-	GoogleAccountUserId *string `db:"google_account_user_id" json:",omitempty"`
+	GoogleAccountUserId string `db:"google_account_user_id"`
 	GoogleAccountUserNme string `db:"google_account_user_nme"`
 	GoogleAccountScope string `db:"google_account_scope"`
 	GoogleAccountTokenType string `db:"google_account_token_type"`

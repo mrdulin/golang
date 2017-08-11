@@ -8,4 +8,6 @@ type Campaign struct {
 	CampaignNme string `db:"campaign_nme" json:"campaignNme"`
 	OrganizationId sql.NullInt64 `db:"organization_id" json:"organizationId"`
 	LocationId int `db:"location_id"`
+
+	GoogleChannelCampaignId int `db:"google_channel_campaign_id"`
 }

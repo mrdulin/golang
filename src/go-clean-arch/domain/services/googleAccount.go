@@ -7,12 +7,12 @@ import (
 )
 
 type IGoogleAccountService interface {
-	FindGoogleAccountsForReport()([]models.GoogleAccount, error)
+	FindGoogleAccountsForReport() ([]models.GoogleAccount, error)
 }
 
 type GoogleAccountService struct {
 	googleAccountRepo repositories.GoogleAccountRepository
-	locationRepo repositories.LocationRepository
+	locationRepo      repositories.LocationRepository
 }
 
 func NewGoogleAccountService(googleAccountRepo repositories.GoogleAccountRepository, locationRepo repositories.LocationRepository) IGoogleAccountService {
@@ -26,21 +26,21 @@ func (svc *GoogleAccountService) FindGoogleAccountsForReport() ([]models.GoogleA
 		return googleAccounts, err
 	}
 	if len(locations) == 0 {
-		return googleAccounts, fmt.Errorf("No location binds google adwords client customer ID.")
+		return googleAccounts, fmt.Errorf("no location binds google adwords client customer id")
 	}
 
-	googleAdwordsClientCustomerIds := make([]int, 0)
+	googleAdWordsClientCustomerIds := make([]int, 0)
 	for _, location := range locations {
 		if location.GoogleAdwordsClientCustomerId != 0 {
-			googleAdwordsClientCustomerIds = append(googleAdwordsClientCustomerIds, location.GoogleAdwordsClientCustomerId)
+			googleAdWordsClientCustomerIds = append(googleAdWordsClientCustomerIds, location.GoogleAdwordsClientCustomerId)
 		}
 	}
 
-	if len(googleAdwordsClientCustomerIds) == 0 {
-		return googleAccounts, fmt.Errorf("No google adwords client customer ids")
+	if len(googleAdWordsClientCustomerIds) == 0 {
+		return googleAccounts, fmt.Errorf("no google adwords client customer ids")
 	}
 
-	googleAccountsForZOWI, err := svc.googleAccountRepo.FindByClientCustomerIds(googleAdwordsClientCustomerIds)
+	googleAccountsForZOWI, err := svc.googleAccountRepo.FindByClientCustomerIds(googleAdWordsClientCustomerIds)
 	if err != nil {
 		return googleAccounts, err
 	}
@@ -53,7 +53,7 @@ func (svc *GoogleAccountService) FindGoogleAccountsForReport() ([]models.GoogleA
 	googleAccounts = append(googleAccounts, googleAccountsForZELO...)
 
 	if len(googleAccounts) == 0 {
-		return googleAccounts, fmt.Errorf("No google accounts for getting report")
+		return googleAccounts, fmt.Errorf("no google accounts for getting report")
 	}
 
 	return googleAccounts, nil

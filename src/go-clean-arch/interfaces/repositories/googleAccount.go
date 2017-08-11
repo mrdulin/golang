@@ -1,7 +1,6 @@
 package repositories
 
 import (
-	"fmt"
 	"github.com/jmoiron/sqlx"
 	"github.com/pkg/errors"
 	"go-clean-arch/domain/models"
@@ -35,23 +34,15 @@ func (googleAccountRepo *GoogleAccountRepository) FindByClientCustomerIds(ids []
 
 	query, args, err := sqlx.In(query, ids)
 	if err != nil {
-		return googleAccounts, errors.Wrap(err, "sqlx.In error")
+		return googleAccounts, errors.Wrap(err, "sqlx.In")
 	}
 	query = googleAccountRepo.Db.Rebind(query)
 
-	//err = googleAccountRepo.Db.Select(&googleAccounts, query, args...)
-	rows, err := googleAccountRepo.Db.Query(query, args)
-
-	defer rows.Close()
-	for rows.Next() {
-
-	}
-
+	err = googleAccountRepo.Db.Select(&googleAccounts, query, args...)
 	if err != nil {
 		return googleAccounts, errors.Wrap(err, "googleAccountRepo.Db.Select error")
 	}
 
-	fmt.Printf("%#v", googleAccounts)
 	return googleAccounts, nil
 }
 

@@ -2,13 +2,20 @@ package main
 
 import (
 	"database/sql"
-	"fmt"
 	"log"
 	"math/rand"
 
 	"github.com/bxcodec/faker"
 	_ "github.com/lib/pq"
 )
+
+type userPO struct {
+	user_id         int
+	user_nme        string
+	user_email      string
+	user_address_id int
+}
+
 
 func main() {
 	driverName := "postgres"
@@ -18,47 +25,41 @@ func main() {
 		log.Fatal(err)
 	}
 
-	users := findUsers(db)
-	log.Printf("%+v\n", users)
-
-	userPO, err := insertUser(db)
+	users, err := findUsers(db)
 	if err != nil {
 		log.Fatal(err)
 	}
-	log.Printf("insert user %+v\n", userPO)
-}
+	log.Printf("%#v\n", users)
 
-type userPO struct {
-	user_id         int
-	user_nme        string
-	user_email      string
-	user_address_id int
+	//userPO, err := insertUser(db)
+	//if err != nil {
+	//	log.Fatal(err)
+	//}
+	//log.Printf("insert user %+v\n", userPO)
 }
 
 // Query
-func findUsers(db *sql.DB) []userPO {
-	sql := `
-		select * from users
-	`
+func findUsers(db *sql.DB) ([]userPO, error) {
+	var userPOs []userPO
+
+	sql := `select user_nme from users`
 
 	rows, err := db.Query(sql)
 	if err != nil {
-		fmt.Print(err)
+		return nil, err
 	}
 	defer rows.Close()
 
-	userPOs := []userPO{}
-
 	for rows.Next() {
 		var u userPO
-		err := rows.Scan(&u.user_id, &u.user_nme, &u.user_email, &u.user_address_id)
+		err := rows.Scan(&u.user_nme)
 		if err != nil {
-			log.Println(err.Error())
+			return nil, err
 		}
 		userPOs = append(userPOs, u)
 	}
 
-	return userPOs
+	return userPOs, nil
 }
 
 func insertUser(db *sql.DB) (userPO, error) {

@@ -16,7 +16,7 @@ func NewUserRepository(Db *sqlx.DB) repositories.UserRepository {
 
 func (ur *userRepository) FindAll() ([]models.User, error) {
 	var users []models.User
-	query := "select * from users"
+	query := "select user_nme from users"
 	err := ur.Db.Select(&users, query)
 	if err != nil {
 		return nil, err
