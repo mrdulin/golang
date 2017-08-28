@@ -4,13 +4,57 @@
 
 ### 使用`Go`的标准库`fmt`
 
-1. 使用`fmt.Printf()`方法打印的日志在没有换行符`\n`情况下，stackdriver Logging 输出日志如下：
+1. 使用`fmt.Printf()`方法打印的日志在没有换行符`\n`情况下，测试代码如下：
+
+```go
+func TestGolangLog(w http.ResponseWriter, r *http.Request) {
+  err := errors.New("custom error using New function")
+  fmt.Printf("%v", err)
+  
+  err = &AppError{Err: "custom error using struct type and fields", Code: 100}
+  fmt.Printf("%v", err)
+  
+  user := User{
+    Name:  fake.UserName(),
+    Email: fake.EmailAddress(),
+  }
+  fmt.Printf("print struct type: %#v", user)
+  
+  if _, err := fmt.Fprint(w, "ok"); err != nil {
+    http.Error(w, "fmt.Fprint", http.StatusInternalServerError)
+  }
+}
+```
+
+stackdriver Logging 输出日志如下：
 
 ![](https://raw.githubusercontent.com/mrdulin/pic-bucket-01/master/WX20190703-124942.png)
 
 可以看到，只打印出了一行日志，这行日志的`textPayload`的字段包含了所有日志内容。显然，这样的日志可读性很差。
 
-2. 使用`fmt.Printf()`方法打印的日志在有换行符`\n`情况下，stackdriver Logging 输出日志如下：
+2. 使用`fmt.Printf()`方法打印的日志在有换行符`\n`情况下，测试代码如下：
+
+```go
+func TestGolangLogWithNewlineSymbol(w http.ResponseWriter, r *http.Request) {
+  err := errors.New("custom error using New function")
+  fmt.Printf("%v\n", err)
+  
+  err = &AppError{Err: "custom error using struct type and fields", Code: 100}
+  fmt.Printf("%v\n", err)
+  
+  user := User{
+    Name:  fake.UserName(),
+    Email: fake.EmailAddress(),
+  }
+  fmt.Printf("print struct type: %#v\n", user)
+  
+  if _, err := fmt.Fprint(w, "ok"); err != nil {
+    http.Error(w, "fmt.Fprint", http.StatusInternalServerError)
+  }
+}
+```
+
+stackdriver Logging 输出日志如下：
 
 ![](https://raw.githubusercontent.com/mrdulin/pic-bucket-01/master/WX20190703-130242.png)
 
@@ -18,7 +62,29 @@
 
 ### 使用`Go`的标准库`log`
 
-1. 使用`log.Printf()`方法打印的日志在有换行符`\n`情况下，stackdriver Logging 输出日志如下：
+1. 使用`log.Printf()`方法打印的日志在有换行符`\n`情况下，测试代码如下：
+
+```go
+func TestGolangLogUsingLog(w http.ResponseWriter, r *http.Request) {
+  err := errors.New("custom error using New function")
+  log.Printf("%v\n", err)
+  
+  err = &AppError{Err: "custom error using struct type and fields", Code: 100}
+  log.Printf("%v\n", err)
+  
+  user := User{
+    Name:  fake.UserName(),
+    Email: fake.EmailAddress(),
+  }
+  log.Printf("print struct type: %#v\n", user)
+  
+  if _, err := fmt.Fprint(w, "ok"); err != nil {
+    http.Error(w, "fmt.Fprint", http.StatusInternalServerError)
+  }
+}
+```
+
+stackdriver Logging 输出日志如下：
 
 ![](https://raw.githubusercontent.com/mrdulin/pic-bucket-01/master/WX20190703-133308.png)
 
@@ -112,6 +178,44 @@ func createLogger(r *http.Request) (*logging.Logger, *logging.Client, error) {
     }),
   )
   return logger, client, nil
+}
+```
+
+使用上述日志组件的Cloud Function代码如下：
+
+```go
+func TestGolangLogUsingCloudLogging(w http.ResponseWriter, r *http.Request) {
+
+  logger, client, err := createLogger(r)
+  if err != nil {
+    fmt.Printf("%v", err)
+    http.Error(w, "create logger error", http.StatusInternalServerError)
+    return
+  }
+  
+  defer func() {
+    if err := client.Close(); err != nil {
+      fmt.Printf("closing logging client error: %#v", err)
+      http.Error(w, "closing logging client error", http.StatusInternalServerError)
+      return
+    }
+  }()
+  
+  err = errors.New("custom error using New function")
+  logger.Log(logging.Entry{Payload: err.Error(), Severity: logging.Error})
+  
+  err = &AppError{Err: "custom error using struct type and fields", Code: 100}
+  logger.Log(logging.Entry{Payload: err, Severity: logging.Error})
+  
+  user := User{
+    Name:  fake.UserName(),
+    Email: fake.EmailAddress(),
+  }
+  logger.Log(logging.Entry{Payload: user, Severity: logging.Debug})
+  
+  if _, err := fmt.Fprint(w, "ok"); err != nil {
+    http.Error(w, "fmt.Fprint", http.StatusInternalServerError)
+  }
 }
 ```
 

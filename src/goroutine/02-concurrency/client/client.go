@@ -35,9 +35,13 @@ func request(echo string) (string, error) {
 	return rval, nil
 }
 
-func goroutineRequest(echo string, ch chan string) {
+func goroutineRequestWithChannel(echo string, ch chan string) {
 	rval, _ := request(echo)
 	ch <- rval
+}
+
+func goroutineRequestWithReturnVal(echo string) (interface{}, error) {
+	return request(echo)
 }
 
 func sequence() {
@@ -57,20 +61,24 @@ func sequenceWithForLoop() {
 	}
 }
 
-func concurrency() {
+func concurrencyWithChannel() {
 	ch1 := make(chan string)
 	ch2 := make(chan string)
 	ch3 := make(chan string)
-	go goroutineRequest("aaa", ch1)
-	go goroutineRequest("bbb", ch2)
-	go goroutineRequest("ccc", ch3)
+	go goroutineRequestWithChannel("aaa", ch1)
+	go goroutineRequestWithChannel("bbb", ch2)
+	go goroutineRequestWithChannel("ccc", ch3)
 
 	rval1, rval2, rval3 := <-ch1, <-ch2, <-ch3
 	log.Printf("rval1: %s, rval2: %s, rval3: %s", rval1, rval2, rval3)
 }
 
+func concurrencyWithReturnVal() {
+
+}
+
 func main() {
 	//sequence()
-	sequenceWithForLoop()
-	//concurrency()
+	//sequenceWithForLoop()
+	//concurrencyWithChannel()
 }
