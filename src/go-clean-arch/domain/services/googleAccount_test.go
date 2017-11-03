@@ -1,7 +1,7 @@
 package services
 
 import (
-	"go-clean-arch/domain/models"
+	"go-clean-arch/domain/models/cedar"
 	"go-clean-arch/domain/repositories"
 	"reflect"
 	"testing"
@@ -36,7 +36,7 @@ func TestGoogleAccountService_FindGoogleAccountsForReport(t *testing.T) {
 	tests := []struct {
 		name    string
 		fields  fields
-		want    []models.GoogleAccount
+		want    []cedar.GoogleAccount
 		wantErr bool
 	}{
 		// TODO: Add test cases.

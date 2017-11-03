@@ -1,8 +1,10 @@
 package repositories
 
-import "go-clean-arch/domain/models"
+import (
+	"go-clean-arch/domain/models/cedar"
+)
 
 type GoogleAccountRepository interface {
-	FindByClientCustomerIds(ids []int) ([]models.GoogleAccount, error)
-	FindByCampaignRanByZOWIForZELO() ([]models.GoogleAccount, error)
+	FindByClientCustomerIds(ids []int) ([]cedar.GoogleAccount, error)
+	FindByCampaignRanByZOWIForZELO() ([]cedar.GoogleAccount, error)
 }

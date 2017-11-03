@@ -3,7 +3,7 @@ package repositories
 import (
 	"github.com/jmoiron/sqlx"
 	"github.com/pkg/errors"
-	"go-clean-arch/domain/models"
+	"go-clean-arch/domain/models/cedar"
 	"go-clean-arch/domain/repositories"
 )
 
@@ -15,8 +15,8 @@ func NewGoogleAccountRepository(Db *sqlx.DB) repositories.GoogleAccountRepositor
 	return &GoogleAccountRepository{Db}
 }
 
-func (googleAccountRepo *GoogleAccountRepository) FindByClientCustomerIds(ids []int) ([]models.GoogleAccount, error) {
-	var googleAccounts []models.GoogleAccount
+func (googleAccountRepo *GoogleAccountRepository) FindByClientCustomerIds(ids []int) ([]cedar.GoogleAccount, error) {
+	var googleAccounts []cedar.GoogleAccount
 
 	query := `
 		SELECT
@@ -46,7 +46,7 @@ func (googleAccountRepo *GoogleAccountRepository) FindByClientCustomerIds(ids []
 	return googleAccounts, nil
 }
 
-func (googleAccountRepo *GoogleAccountRepository) FindByCampaignRanByZOWIForZELO() ([]models.GoogleAccount, error) {
+func (googleAccountRepo *GoogleAccountRepository) FindByCampaignRanByZOWIForZELO() ([]cedar.GoogleAccount, error) {
 	query := `
 		select
 			distinct on (ga.google_account_id)
@@ -57,7 +57,7 @@ func (googleAccountRepo *GoogleAccountRepository) FindByCampaignRanByZOWIForZELO
 		inner join "GOOGLE_ACCOUNT" as ga on ga.organization_id = org.parent_id
 		where c.campaign_ran_by_zowi = true;
 	`
-	var googleAccouts []models.GoogleAccount
+	var googleAccouts []cedar.GoogleAccount
 	err := googleAccountRepo.Db.Select(&googleAccouts, query)
 	if err != nil {
 		return googleAccouts, errors.Wrap(err, "googleAccountRepo.Db.Select error")

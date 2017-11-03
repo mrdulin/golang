@@ -1,7 +1,7 @@
 package repositories
 
 import (
-	"go-clean-arch/domain/models"
+	"go-clean-arch/domain/models/cedar/campaign"
 	"go-clean-arch/domain/repositories"
 	"reflect"
 	"testing"
@@ -40,7 +40,7 @@ func TestCampaignRepository_FindById(t *testing.T) {
 		name    string
 		fields  fields
 		args    args
-		want    *models.Campaign
+		want    *campaign.Campaign
 		wantErr bool
 	}{
 		// TODO: Add test cases.
@@ -69,7 +69,7 @@ func TestCampaignRepository_FindValidGoogleCampaign(t *testing.T) {
 	tests := []struct {
 		name    string
 		fields  fields
-		want    []*models.Campaign
+		want    []*campaign.Campaign
 		wantErr bool
 	}{
 		// TODO: Add test cases.

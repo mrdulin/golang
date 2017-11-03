@@ -1,7 +1,9 @@
 package repositories
 
-import "go-clean-arch/domain/models"
+import (
+	"go-clean-arch/domain/models/cedar"
+)
 
 type LocationRepository interface {
-	FindLocationsBoundGoogleClientCustomerId() ([]models.Location, error)
+	FindLocationsBoundGoogleClientCustomerId() ([]cedar.Location, error)
 }

@@ -1,7 +1,7 @@
 package repositories
 
 import (
-	"go-clean-arch/domain/models"
+	"go-clean-arch/domain/models/cedar"
 	"go-clean-arch/domain/repositories"
 	"reflect"
 	"testing"
@@ -40,7 +40,7 @@ func TestGoogleAccountRepository_FindByClientCustomerIds(t *testing.T) {
 		name    string
 		fields  fields
 		args    args
-		want    []models.GoogleAccount
+		want    []cedar.GoogleAccount
 		wantErr bool
 	}{
 		// TODO: Add test cases.
@@ -69,7 +69,7 @@ func TestGoogleAccountRepository_FindByCampaignRanByZOWIForZELO(t *testing.T) {
 	tests := []struct {
 		name    string
 		fields  fields
-		want    []models.GoogleAccount
+		want    []cedar.GoogleAccount
 		wantErr bool
 	}{
 		// TODO: Add test cases.

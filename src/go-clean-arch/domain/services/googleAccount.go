@@ -2,12 +2,12 @@ package services
 
 import (
 	"fmt"
-	"go-clean-arch/domain/models"
+	"go-clean-arch/domain/models/cedar"
 	"go-clean-arch/domain/repositories"
 )
 
 type IGoogleAccountService interface {
-	FindGoogleAccountsForReport() ([]models.GoogleAccount, error)
+	FindGoogleAccountsForReport() ([]cedar.GoogleAccount, error)
 }
 
 type GoogleAccountService struct {
@@ -19,8 +19,8 @@ func NewGoogleAccountService(googleAccountRepo repositories.GoogleAccountReposit
 	return &GoogleAccountService{googleAccountRepo, locationRepo}
 }
 
-func (svc *GoogleAccountService) FindGoogleAccountsForReport() ([]models.GoogleAccount, error) {
-	googleAccounts := make([]models.GoogleAccount, 0)
+func (svc *GoogleAccountService) FindGoogleAccountsForReport() ([]cedar.GoogleAccount, error) {
+	googleAccounts := make([]cedar.GoogleAccount, 0)
 	locations, err := svc.locationRepo.FindLocationsBoundGoogleClientCustomerId()
 	if err != nil {
 		return googleAccounts, err

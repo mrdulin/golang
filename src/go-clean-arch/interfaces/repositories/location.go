@@ -2,7 +2,7 @@ package repositories
 
 import (
 	"github.com/jmoiron/sqlx"
-	"go-clean-arch/domain/models"
+	"go-clean-arch/domain/models/cedar"
 	"go-clean-arch/domain/repositories"
 )
 
@@ -14,8 +14,8 @@ func NewLocationRepository(Db *sqlx.DB) repositories.LocationRepository {
 	return &LocationRepository{Db}
 }
 
-func (locationRepo *LocationRepository) FindLocationsBoundGoogleClientCustomerId() ([]models.Location, error) {
-	var locations []models.Location
+func (locationRepo *LocationRepository) FindLocationsBoundGoogleClientCustomerId() ([]cedar.Location, error) {
+	var locations []cedar.Location
 	query := `
 		SELECT 
 			DISTINCT ON

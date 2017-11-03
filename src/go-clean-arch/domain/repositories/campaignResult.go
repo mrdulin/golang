@@ -1,7 +1,10 @@
 package repositories
 
-import models "go-clean-arch/domain/models/adChannel"
+import (
+	adChannelModels "go-clean-arch/domain/models/adChannel"
+	"go-clean-arch/domain/models/cedar/campaign"
+)
 
 type CampaignResultRepository interface {
-	UpdateStatusTransaction(row models.AdPerformanceReportRow) error
+	UpdateStatusTransaction(row adChannelModels.AdPerformanceReportRow, status campaign.CampaignChannelStatus) error
 }

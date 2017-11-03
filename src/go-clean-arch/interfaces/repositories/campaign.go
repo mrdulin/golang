@@ -3,7 +3,7 @@ package repositories
 import (
 	"github.com/jmoiron/sqlx"
 	"github.com/pkg/errors"
-	"go-clean-arch/domain/models"
+	"go-clean-arch/domain/models/cedar/campaign"
 	"go-clean-arch/domain/repositories"
 )
 
@@ -15,8 +15,8 @@ func NewCampaignRepository(Db *sqlx.DB) repositories.CampaignRepository {
 	return &CampaignRepository{Db}
 }
 
-func (cr *CampaignRepository) FindById(id string) (*models.Campaign, error) {
-	campaign := models.Campaign{}
+func (cr *CampaignRepository) FindById(id string) (*campaign.Campaign, error) {
+	campaign := campaign.Campaign{}
 	query := `
 		SELECT
 			campaign_id,
@@ -31,8 +31,8 @@ func (cr *CampaignRepository) FindById(id string) (*models.Campaign, error) {
 	return &campaign, nil
 }
 
-func (cr *CampaignRepository) FindValidGoogleCampaign() ([]*models.Campaign, error) {
-	var campaigns []*models.Campaign
+func (cr *CampaignRepository) FindValidGoogleCampaign() ([]*campaign.Campaign, error) {
+	var campaigns []*campaign.Campaign
 
 	query := `
 		select 
@@ -53,7 +53,7 @@ func (cr *CampaignRepository) FindValidGoogleCampaign() ([]*models.Campaign, err
 		return nil, errors.Wrap(err, "cr.Db.Queryx")
 	}
 	for rows.Next() {
-		var campaign models.Campaign
+		var campaign campaign.Campaign
 		err := rows.StructScan(&campaign)
 		if err != nil {
 			return nil, errors.Wrap(err, "rows.StructScan")

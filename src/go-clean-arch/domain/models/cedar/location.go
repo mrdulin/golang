@@ -1,4 +1,4 @@
-package models
+package cedar
 
 type Location struct {
 	LocationId                    int `db:"location_id"`

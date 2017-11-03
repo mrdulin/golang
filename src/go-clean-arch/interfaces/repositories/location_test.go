@@ -1,7 +1,7 @@
 package repositories
 
 import (
-	"go-clean-arch/domain/models"
+	"go-clean-arch/domain/models/cedar"
 	"go-clean-arch/domain/repositories"
 	"reflect"
 	"testing"
@@ -36,7 +36,7 @@ func TestLocationRepository_FindLocationsBoundGoogleClientCustomerId(t *testing.
 	tests := []struct {
 		name    string
 		fields  fields
-		want    []models.Location
+		want    []cedar.Location
 		wantErr bool
 	}{
 		// TODO: Add test cases.

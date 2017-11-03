@@ -1,4 +1,4 @@
-package models
+package cedar
 
 type GoogleChannel struct {
 	GoogleChannelCampaignId string `db:"google_channel_campaign_id"`

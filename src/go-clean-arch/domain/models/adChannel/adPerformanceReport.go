@@ -1,17 +1,23 @@
 package models
 
+import (
+	"go-clean-arch/domain/models/adChannel/ad"
+	"go-clean-arch/domain/models/adChannel/adGroup"
+	"go-clean-arch/domain/models/adChannel/campaign"
+)
+
 type AdPerformanceReportRow struct {
-	Text           string `xml:",chardata"`
-	AdGroupID      string `xml:"adGroupID,attr"`
-	AdGroup        string `xml:"adGroup,attr"`
-	AdGroupState   string `xml:"adGroupState,attr"`
-	AdType         string `xml:"adType,attr"`
-	CampaignID     string `xml:"campaignID,attr"`
-	Campaign       string `xml:"campaign,attr"`
-	CampaignState  string `xml:"campaignState,attr"`
-	ApprovalStatus string `xml:"approvalStatus,attr"`
-	AdID           string `xml:"adID,attr"`
-	AdState        string `xml:"adState,attr"`
+	Text           string                 `xml:",chardata"`
+	AdGroupID      string                 `xml:"adGroupID,attr"`
+	AdGroup        string                 `xml:"adGroup,attr"`
+	AdGroupState   adGroup.AdGroupState   `xml:"adGroupState,attr"`
+	AdType         string                 `xml:"adType,attr"`
+	CampaignID     string                 `xml:"campaignID,attr"`
+	Campaign       string                 `xml:"campaign,attr"`
+	CampaignState  campaign.CampaignState `xml:"campaignState,attr"`
+	ApprovalStatus ad.ApprovalStatus      `xml:"approvalStatus,attr"`
+	AdID           string                 `xml:"adID,attr"`
+	AdState        ad.AdState             `xml:"adState,attr"`
 }
 
 type AdPerformanceReport struct {

@@ -13,7 +13,7 @@ func init() {
 }
 
 func GetAdPerformanceReport(_ context.Context, _ functions.PubSubMessage) error {
-	adPerformanceReportUseCase := application.NewAdPerformanceReportUseCase(compositionRoot.CampaignService, compositionRoot.AppConfig)
+	adPerformanceReportUseCase := application.NewAdPerformanceReportUseCase(compositionRoot.CampaignService, compositionRoot.CampaignResultService, compositionRoot.AppConfig)
 	if err := adPerformanceReportUseCase.Get(); err != nil {
 		return err
 	}

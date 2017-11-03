@@ -12,13 +12,19 @@ type IAdPerformanceReportUseCase interface {
 }
 
 type AdPerformanceReportUseCase struct {
-	campaignService services.ICampaignService
-	appConfig       *config.ApplicationConfig
+	campaignService       services.ICampaignService
+	campaignResultService services.ICampaignResultService
+	appConfig             *config.ApplicationConfig
 }
 
-func NewAdPerformanceReportUseCase(campaignService services.ICampaignService, appConfig *config.ApplicationConfig) IAdPerformanceReportUseCase {
+func NewAdPerformanceReportUseCase(
+	campaignService services.ICampaignService,
+	campaignResultService services.ICampaignResultService,
+	appConfig *config.ApplicationConfig,
+) IAdPerformanceReportUseCase {
 	return &AdPerformanceReportUseCase{
 		campaignService,
+		campaignResultService,
 		appConfig,
 	}
 }
@@ -30,9 +36,10 @@ func (uc *AdPerformanceReportUseCase) Get() error {
 	}
 
 	options := adPerformance.AdPerformanceReportServiceOptions{
-		ClientCustomerId: uc.appConfig.ClientCustomerId,
-		RefreshToken:     uc.appConfig.RefreshToken,
-		BaseURL:          uc.appConfig.AdChannelApi,
+		ClientCustomerId:      uc.appConfig.ClientCustomerId,
+		RefreshToken:          uc.appConfig.RefreshToken,
+		BaseURL:               uc.appConfig.AdChannelApi,
+		CampaignResultService: uc.campaignResultService,
 	}
 	adPerformanceService := adPerformance.NewAdPerformanceReportService(options)
 	reportDefinition := adPerformanceService.FormReportDefinition(googleCampaignIds)
