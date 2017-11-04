@@ -12,6 +12,8 @@
 2019/06/28 17:10:45 rval3:  ccc
 ```
 
+`sequenceWithForLoop` 例子，使用`for`循环发送三个请求，结果和 `sequence` 例子是一样的
+
 `concurrency` 例子，演示三个请求并发，结果是
 
 ```bash

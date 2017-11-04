@@ -49,6 +49,14 @@ func sequence() {
 	log.Println("rval3: ", rval3)
 }
 
+func sequenceWithForLoop() {
+	echos := []string{"aaa", "bbb", "ccc"}
+	for _, echo := range echos {
+		rval, _ := request(echo)
+		log.Println("rval: ", rval)
+	}
+}
+
 func concurrency() {
 	ch1 := make(chan string)
 	ch2 := make(chan string)
@@ -63,5 +71,6 @@ func concurrency() {
 
 func main() {
 	//sequence()
-	concurrency()
+	sequenceWithForLoop()
+	//concurrency()
 }
