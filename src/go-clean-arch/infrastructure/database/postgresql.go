@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
+	"github.com/pkg/errors"
 )
 
 type PGDatabaseConfig struct {
@@ -15,7 +16,7 @@ func ConnectPGDatabase(conf *PGDatabaseConfig) (*sqlx.DB, error) {
 	driverName := "postgres"
 	db, err := sqlx.Connect(driverName, dataSourceName)
 	if err != nil {
-		return nil, err
+		return nil, errors.Wrap(err, "sqlx.Connect(driverName, dataSourceName)")
 	}
 	return db, nil
 }

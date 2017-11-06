@@ -18,6 +18,7 @@ func NewCampaignResultService(campaignResultRepo repositories.CampaignResultRepo
 }
 
 func (svc *CampaignResultService) UpdateStatusTransaction(rows []models.AdPerformanceReportRow) error {
+	// TODO: batch update
 	for _, row := range rows {
 		return svc.campaignResultRepo.UpdateStatusTransaction(row)
 	}

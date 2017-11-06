@@ -115,7 +115,6 @@ func (svc *AdPerformanceReportService) FormReportDefinition(campaignIds []int) m
 
 // UpdateStatusTransaction will update campaign status and ad group status, ad status.
 func (svc *AdPerformanceReportService) UpdateStatusTransaction(rows []models.AdPerformanceReportRow) error {
-
 	err := svc.options.campaignResultService.UpdateStatusTransaction(rows)
 	if err != nil {
 		return errors.Wrap(err, "svc.options.campaignResultRepo.UpdateStatusTransaction()")

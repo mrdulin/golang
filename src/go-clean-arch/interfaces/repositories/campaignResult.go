@@ -15,7 +15,7 @@ func NewCampaignResultRepository(Db *sqlx.DB) repositories.CampaignResultReposit
 	return &CampaignResultRepository{Db}
 }
 
-func (repo *CampaignResultRepository) UpdateStatusTransaction(row *models.AdPerformanceReportRow) error {
+func (repo *CampaignResultRepository) UpdateStatusTransaction(row models.AdPerformanceReportRow) error {
 	tx, err := repo.Db.Begin()
 	if err != nil {
 		return errors.Wrap(err, "repo.Db.Begin()")

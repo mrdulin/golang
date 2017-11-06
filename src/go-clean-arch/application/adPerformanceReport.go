@@ -3,8 +3,8 @@ package application
 import (
 	"go-clean-arch/domain/services"
 	"go-clean-arch/domain/services/adChannel/reports/adPerformance"
+	"go-clean-arch/infrastructure/config"
 	"log"
-	"os"
 )
 
 type IAdPerformanceReportUseCase interface {
@@ -13,11 +13,13 @@ type IAdPerformanceReportUseCase interface {
 
 type AdPerformanceReportUseCase struct {
 	campaignService services.ICampaignService
+	appConfig       *config.ApplicationConfig
 }
 
-func NewAdPerformanceReportUseCase(campaignService services.ICampaignService) IAdPerformanceReportUseCase {
+func NewAdPerformanceReportUseCase(campaignService services.ICampaignService, appConfig *config.ApplicationConfig) IAdPerformanceReportUseCase {
 	return &AdPerformanceReportUseCase{
 		campaignService,
+		appConfig,
 	}
 }
 
@@ -28,9 +30,9 @@ func (uc *AdPerformanceReportUseCase) Get() error {
 	}
 
 	options := adPerformance.AdPerformanceReportServiceOptions{
-		ClientCustomerId: 0,
-		RefreshToken:     "",
-		BaseURL:          os.Getenv("BaseURL"),
+		ClientCustomerId: uc.appConfig.ClientCustomerId,
+		RefreshToken:     uc.appConfig.RefreshToken,
+		BaseURL:          uc.appConfig.AdChannelApi,
 	}
 	adPerformanceService := adPerformance.NewAdPerformanceReportService(options)
 	reportDefinition := adPerformanceService.FormReportDefinition(googleCampaignIds)
