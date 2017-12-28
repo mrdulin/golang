@@ -16,7 +16,6 @@ type userPO struct {
 	user_address_id int
 }
 
-
 func main() {
 	driverName := "postgres"
 	dataSourceName := "user=sampleadmin password=samplepass port=5431 dbname=nodejs-pg-knex-samples sslmode=disable"

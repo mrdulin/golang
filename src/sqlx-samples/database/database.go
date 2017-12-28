@@ -9,7 +9,7 @@ type IDataBase interface {
 	Connect() (*sqlx.DB, error)
 }
 
-type DataBase struct {}
+type DataBase struct{}
 
 func NewDataBase() IDataBase {
 	return &DataBase{}

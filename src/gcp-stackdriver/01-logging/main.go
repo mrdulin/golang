@@ -86,7 +86,6 @@ func TestGolangLogUsingLog(w http.ResponseWriter, r *http.Request) {
 
 func createLogger(r *http.Request) (*logging.Logger, *logging.Client, error) {
 	ctx := context.Background()
-	fmt.Printf("ProjectId: %s", ProjectId)
 	client, err := logging.NewClient(ctx, ProjectId)
 	if err != nil {
 		return nil, nil, err

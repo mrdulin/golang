@@ -2,16 +2,16 @@ package main
 
 import (
 	"database/sql"
+	"fmt"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"log"
-	"fmt"
 )
 
 type userPO struct {
-	user_id int
-	user_nme string
-	user_email string
+	user_id         int
+	user_nme        string
+	user_email      string
 	user_address_id sql.NullString
 	//user_address_id int
 }
@@ -27,7 +27,7 @@ func main() {
 	fmt.Printf("%#v", users)
 }
 
-func findUsersQueryBuilder (db *gorm.DB) []userPO {
+func findUsersQueryBuilder(db *gorm.DB) []userPO {
 	rows, err := db.Table("users").Select("user_id, user_nme, user_email, user_address_id").Rows()
 	panicIf(err)
 	defer rows.Close()

@@ -15,7 +15,7 @@ var (
 	ProjectId = os.Getenv("GCP_PROJECT")
 )
 
-func getBucketAttrs()([]*storage.BucketAttrs, error) {
+func getBucketAttrs() ([]*storage.BucketAttrs, error) {
 	ctx := context.Background()
 	client, err := storage.NewClient(ctx)
 	if err != nil {

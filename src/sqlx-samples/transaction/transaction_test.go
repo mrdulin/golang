@@ -7,9 +7,10 @@ import (
 )
 
 var (
-	db database.IDataBase
+	db                 database.IDataBase
 	transactionSamples ITransactionSamples
 )
+
 func init() {
 	db = database.NewDataBase()
 	sqlxDb, err := db.Connect()

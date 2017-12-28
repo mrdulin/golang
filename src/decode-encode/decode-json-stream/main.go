@@ -1,9 +1,9 @@
 package main
 
 import (
+	"decode-encode/decode-json-stream/jsonextend"
 	"encoding/json"
 	"fmt"
-	"decode-encode/decode-json-stream/jsonextend"
 )
 
 // Message is used to store json data
@@ -35,5 +35,3 @@ func main() {
 	}
 	fmt.Printf("%#v\n", messages)
 }
-
-

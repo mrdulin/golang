@@ -3,7 +3,7 @@ package jsonextend
 import "testing"
 
 type decodeJSONStreamTest struct {
-	jsonStream string
+	jsonStream           string
 	expectedErrorMessage string
 }
 
@@ -40,12 +40,12 @@ func TestDecodeJSONStream(t *testing.T) {
 	}
 
 	for _, testCase := range decodeJSONStreamTests {
-		_, err := DecodeJSONStream(testCase.jsonStream, message)	
+		_, err := DecodeJSONStream(testCase.jsonStream, message)
 		if err != nil {
 			if err.Error() != testCase.expectedErrorMessage {
 				t.Errorf("%#v", err)
 			}
 		}
 	}
-	
+
 }
