@@ -1,9 +1,9 @@
 package main
 
 import (
-	"cloud-run/05-connecting-to-cloud-sql/infra/database"
 	"encoding/json"
 	"fmt"
+	"gcp-cloud-run/05-connecting-to-cloud-sql/infra/database"
 	"github.com/jmoiron/sqlx"
 	"log"
 	"net/http"

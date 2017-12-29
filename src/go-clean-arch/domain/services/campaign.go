@@ -1,7 +1,7 @@
 package services
 
 import (
-	"fmt"
+	"go-clean-arch/domain/models"
 	"go-clean-arch/domain/repositories"
 )
 
@@ -29,7 +29,7 @@ func (svc *CampaignService) FindValidGoogleCampaignIds() ([]int, error) {
 	}
 
 	if len(googleChannelCampaignIds) == 0 {
-		return nil, fmt.Errorf("no valid campaign found")
+		return nil, &models.AppError{Err: "no valid campaign found", Code: models.BusinessErrorCode}
 	}
 
 	return googleChannelCampaignIds, nil

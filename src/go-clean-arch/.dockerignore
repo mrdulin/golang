@@ -13,6 +13,7 @@ k8s
 .env-qa
 .env-prod
 .env-stage
+.env*
 
 vendor
 config.*.json

@@ -1,6 +1,8 @@
 package application
 
 import (
+	"fmt"
+	"go-clean-arch/domain/models"
 	"go-clean-arch/domain/services"
 	"go-clean-arch/domain/services/adChannel/reports/adPerformance"
 	"go-clean-arch/infrastructure/config"
@@ -32,6 +34,10 @@ func NewAdPerformanceReportUseCase(
 func (uc *AdPerformanceReportUseCase) Get() error {
 	googleCampaignIds, err := uc.campaignService.FindValidGoogleCampaignIds()
 	if err != nil {
+		if err, ok := err.(*models.AppError); ok {
+			fmt.Printf("%v", err)
+			return nil
+		}
 		return err
 	}
 
