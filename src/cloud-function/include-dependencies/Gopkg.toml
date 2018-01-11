@@ -29,22 +29,6 @@
   name = "cloud.google.com/go"
   version = "0.40.0"
 
-[[constraint]]
-  name = "github.com/bxcodec/faker"
-  version = "2.0.1"
-
-[[constraint]]
-  name = "github.com/jinzhu/gorm"
-  version = "1.9.9"
-
-[[constraint]]
-  name = "github.com/jmoiron/sqlx"
-  version = "1.2.0"
-
-[[constraint]]
-  name = "github.com/lib/pq"
-  version = "1.1.1"
-
 [prune]
   go-tests = true
   unused-packages = true

@@ -18,17 +18,6 @@
   version = "v0.40.0"
 
 [[projects]]
-  digest = "1:c952f10089bb57d6e6d56d8880bcbb4d444b1d40b091354cb25b10a6c23b211a"
-  name = "github.com/bxcodec/faker"
-  packages = [
-    ".",
-    "support/slice",
-  ]
-  pruneopts = "UT"
-  revision = "bfe096fd9e446fc441f79f1aa53cf1c9b5594179"
-  version = "v2.0.1"
-
-[[projects]]
   digest = "1:64c2b533ffd17023738c534548ab2455d7f519bc15ed4225145425ed2222448b"
   name = "github.com/golang/protobuf"
   packages = [
@@ -58,49 +47,6 @@
   pruneopts = "UT"
   revision = "7087cb70de9f7a8bc0a10c375cb0d2280a8edf9c"
   version = "v0.5.1"
-
-[[projects]]
-  digest = "1:c1a831110975734d22f89140e720da0bb5575b2516b37b2f242a5ea5e3e1e563"
-  name = "github.com/jinzhu/gorm"
-  packages = [
-    ".",
-    "dialects/postgres",
-  ]
-  pruneopts = "UT"
-  revision = "01b66011427614f01e84a473b0303c917179f2a0"
-  version = "v1.9.9"
-
-[[projects]]
-  digest = "1:01ed62f8f4f574d8aff1d88caee113700a2b44c42351943fa73cc1808f736a50"
-  name = "github.com/jinzhu/inflection"
-  packages = ["."]
-  pruneopts = "UT"
-  revision = "f5c5f50e6090ae76a29240b61ae2a90dd810112e"
-  version = "v1.0.0"
-
-[[projects]]
-  digest = "1:6c41d4f998a03b6604227ccad36edaed6126c397e5d78709ef4814a1145a6757"
-  name = "github.com/jmoiron/sqlx"
-  packages = [
-    ".",
-    "reflectx",
-  ]
-  pruneopts = "UT"
-  revision = "d161d7a76b5661016ad0b085869f77fd410f3e6a"
-  version = "v1.2.0"
-
-[[projects]]
-  digest = "1:0e06e487551e2f9e0d6967a15c42223354e37c2e9869b301b14a42e4b51ea3e0"
-  name = "github.com/lib/pq"
-  packages = [
-    ".",
-    "hstore",
-    "oid",
-    "scram",
-  ]
-  pruneopts = "UT"
-  revision = "bc6a3c0594130b1e34005880bc600b6d3f49fa7f"
-  version = "v1.1.1"
 
 [[projects]]
   digest = "1:74055050ea547bb04600be79cc501965cb3de8988018262f2ca430f0a0b48ec3"
@@ -142,7 +88,7 @@
     "trace",
   ]
   pruneopts = "UT"
-  revision = "d28f0bde5980168871434b95cfc858db9f2a7a99"
+  revision = "3b0461eec859c4b73bb64fdc8285971fd33e3938"
 
 [[projects]]
   branch = "master"
@@ -160,11 +106,11 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:249fd56fb36a223aee164e2dc35e3b3a1b92dd3873dfb60216280b9fb9d4a784"
+  digest = "1:d4488b7ca589840d020983978f9f139b89872b90d8a6d725de2fcac6c9448273"
   name = "golang.org/x/sys"
   packages = ["unix"]
   pruneopts = "UT"
-  revision = "516e3c20635fbe39539f7ed361a15c51fec29cd8"
+  revision = "c5567b49c5d04a5f83870795b8c0e2df43a8ce32"
 
 [[projects]]
   digest = "1:8d8faad6b12a3a4c819a3f9618cb6ee1fa1cfc33253abeeea8b55336721e3405"
@@ -192,7 +138,7 @@
   version = "v0.3.2"
 
 [[projects]]
-  digest = "1:06b06a112ad8f420557af56ad06bb8b16b77d11b0a2f11edf335095f7772e9b5"
+  digest = "1:a7e4acda410127f8e14d451bfb86bb843eec1a991c5e80f88926fe619296bed1"
   name = "google.golang.org/api"
   packages = [
     "gensupport",
@@ -207,8 +153,8 @@
     "transport/http/internal/propagation",
   ]
   pruneopts = "UT"
-  revision = "aac82e61c0c8fe133c297b4b59316b9f481e1f0a"
-  version = "v0.6.0"
+  revision = "02490b97dff7cfde1995bd77de808fd27053bc87"
+  version = "v0.7.0"
 
 [[projects]]
   digest = "1:498b722d33dde4471e7d6e5d88a5e7132d2a8306fea5ff5ee82d1f418b4f41ed"
@@ -241,7 +187,7 @@
     "googleapis/type/expr",
   ]
   pruneopts = "UT"
-  revision = "a7e196e89fd3a3c4d103ca540bd5dac3a736e375"
+  revision = "6af8c5fc6601ab6b41cd32742a65ce2f5bd9db57"
 
 [[projects]]
   digest = "1:e8800ddadd6bce3bc0c5ffd7bc55dbdddc6e750956c10cc10271cade542fccbe"
@@ -287,13 +233,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  input-imports = [
-    "cloud.google.com/go/storage",
-    "github.com/bxcodec/faker",
-    "github.com/jinzhu/gorm",
-    "github.com/jinzhu/gorm/dialects/postgres",
-    "github.com/jmoiron/sqlx",
-    "github.com/lib/pq",
-  ]
+  input-imports = ["cloud.google.com/go/storage"]
   solver-name = "gps-cdcl"
   solver-version = 1
