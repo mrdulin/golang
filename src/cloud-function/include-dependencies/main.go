@@ -45,12 +45,14 @@ func getBucketNames(bucketAttrsSlice []*storage.BucketAttrs) []string {
 	return bucketNames
 }
 
-func IncludedependenciesTest(writer http.ResponseWriter, req *http.Request) {
+func IncludedependenciesTest(w http.ResponseWriter, req *http.Request) {
 	bucketAttrsSlice, err := getBucketAttrs()
 	if err != nil {
-		log.Println(err)
+		log.Printf("%v", err)
+		http.Error(w, "get bucket attrs error", http.StatusInternalServerError)
+		return
 	}
 	var bucketNames = getBucketNames(bucketAttrsSlice)
 	log.Printf("%#v", bucketNames)
-	fmt.Fprintf(writer, "%#v", bucketNames)
+	fmt.Fprintf(w, "%#v", bucketNames)
 }
