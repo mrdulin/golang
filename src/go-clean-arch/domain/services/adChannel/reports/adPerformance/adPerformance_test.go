@@ -7,12 +7,6 @@ import (
 	"testing"
 )
 
-//var options = AdPerformanceReportServiceOptions{
-//	BaseURL: "http://localhost:3200/ad/api/v1",
-//	ClientCustomerId: 9258066191,
-//	RefreshToken: "1/P0z-iBX65sj-O666TnftiE9VSvb927m39SKG9D3Y_jI",
-//}
-
 var options AdPerformanceReportServiceOptions
 
 func init() {
