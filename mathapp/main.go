@@ -2,7 +2,8 @@ package main
 
 import (
 	"fmt"
-	"go-playground/sqrt"
+
+	"github.com/mrdulin/go-playground/sqrt"
 )
 
 func main() {
