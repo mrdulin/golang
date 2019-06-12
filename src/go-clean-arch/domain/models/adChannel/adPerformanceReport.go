@@ -30,3 +30,4 @@ type AdPerformanceReport struct {
 		} `xml:"row"`
 	} `xml:"table"`
 }
+

@@ -5,14 +5,14 @@ import (
 	"encoding/json"
 	"encoding/xml"
 	"github.com/pkg/errors"
-	"go-clean-arch/domain/models"
+	"go-clean-arch/domain/models/adChannel"
 	"io/ioutil"
 	"net/http"
 	"strconv"
 )
 
 type IAdPerformanceReportService interface {
-	Get() (*models.AdPerformanceReport, error)
+	Get(reportDefinition ...models.ReportDefinition) (*models.AdPerformanceReport, error)
 }
 
 type AdPerformanceReportServiceOptions struct {
@@ -30,11 +30,13 @@ func NewAdPerformanceReportService(options AdPerformanceReportServiceOptions) IA
 	return &AdPerformanceReportService{options}
 }
 
-func (svc *AdPerformanceReportService) Get() (*models.AdPerformanceReport, error) {
-	var body = struct {
-		dateRangeType string
-	}{
-		dateRangeType: "ALL",
+func (svc *AdPerformanceReportService) Get(reportDefinition ...models.ReportDefinition) (*models.AdPerformanceReport, error) {
+	var body = models.ReportDefinition{
+		DateRangeType: "ALL",
+	}
+
+	if len(reportDefinition) != 0 {
+		body = reportDefinition[0]
 	}
 
 	buf := new(bytes.Buffer)
