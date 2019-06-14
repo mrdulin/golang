@@ -2,31 +2,20 @@ package main
 
 import (
 	"fmt"
+	"github.com/mrdulin/golang/struct/entities/person"
 )
 
-type person struct {
-	name string
-	age  int
-}
-
-func older(p1, p2 person) (person, int) {
-	if p1.age > p2.age {
-		return p1, p1.age - p2.age
-	}
-	return p2, p2.age - p1.age
-}
-
 func main() {
-	var tom person
-	tom.name, tom.age = "Tom", 18
-	bob := person{age: 25, name: "Bob"}
-	paul := person{"Paul", 43}
+	var tom entities.Person
+	tom.Name, tom.Age = "Tom", 18
+	bob :=  entities.Person{Age: 25, Name: "Bob"}
+	paul :=  entities.Person{Name: "Paul", Age: 43}
 
-	tbOlder, tbDiff := older(tom, bob)
-	tpOlder, tpDiff := older(tom, paul)
-	bpOlder, bpDiff := older(bob, paul)
+	tbOlder, tbDiff := entities.Older(tom, bob)
+	tpOlder, tpDiff := entities.Older(tom, paul)
+	bpOlder, bpDiff := entities.Older(bob, paul)
 
-	fmt.Println("%s and %s, %s is older by %d years\n", tom.name, bob.name, tbOlder, tbDiff)	
-	fmt.Println("%s and %s, %s is older by %d years\n", tom.name, paul.name, tpOlder, tpDiff)
-	fmt.Println("%s and %s, %s is older by %d years\n", bob.name, paul.name, bpOlder, bpDiff)
+	fmt.Println("%s and %s, %s is older by %d years\n", tom.Name, bob.Name, tbOlder, tbDiff)
+	fmt.Println("%s and %s, %s is older by %d years\n", tom.Name, paul.Name, tpOlder, tpDiff)
+	fmt.Println("%s and %s, %s is older by %d years\n", bob.Name, paul.Name, bpOlder, bpDiff)
 }
