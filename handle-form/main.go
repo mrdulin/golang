@@ -54,8 +54,8 @@ func selectFormController(w http.ResponseWriter, r *http.Request) {
 func main() {
 	const PORT int = 9090
 	http.HandleFunc("/", sayHelloName)
-	http.HandleFunc("/login", login)
-	http.HandleFunc("/select", selectFormController)
+	http.HandleFunc("/login", login) -
+		http.HandleFunc("/select", selectFormController)
 	log.Println(fmt.Sprintf("Staring http server on http://localhost:%d", PORT))
 	err := http.ListenAndServe(fmt.Sprintf(":%d", PORT), nil)
 	if err != nil {
