@@ -1,7 +1,9 @@
 package repositories
 
-import models "github.com/mrdulin/golang/go-clean-arch/domain/models/user"
+import (
+	"go-clean-arch/domain/models"
+)
 
 type UserRepository interface {
-	FindAll() ([]*models.User, error)
+	FindAll() ([]models.User, error)
 }
