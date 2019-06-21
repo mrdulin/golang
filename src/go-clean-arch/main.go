@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"github.com/spf13/viper"
 	"go-clean-arch/infrastructure/database"
@@ -41,16 +40,23 @@ func main() {
 	//users, _ := userRepository.FindAll()
 	//fmt.Printf("%#v", &users)
 
-	campaignRepository := repositories.NewCampaignRepository(db)
-	campaign, err := campaignRepository.FindById("102")
+	//campaignRepository := repositories.NewCampaignRepository(db)
+	//campaign, err := campaignRepository.FindById("102")
+	//if err != nil {
+	//	panic(err)
+	//}
+	//fmt.Printf("%#v\n", campaign)
+	//campaignJSON, err := json.Marshal(campaign)
+	//if err != nil {
+	//	panic(err)
+	//}
+	//fmt.Println("campaignJSON:", string(campaignJSON))
+
+	googleAccountRepo := repositories.NewGoogleAccountRepository(db)
+	locations, err := googleAccountRepo.FindGoogleAccountsForReport()
 	if err != nil {
 		panic(err)
 	}
-	fmt.Printf("%#v\n", campaign)
-	campaignJSON, err := json.Marshal(campaign)
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println("campaignJSON:", string(campaignJSON))
+	fmt.Printf("%#v", &locations)
 
 }

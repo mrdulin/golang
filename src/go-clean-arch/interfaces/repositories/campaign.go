@@ -14,7 +14,7 @@ func NewCampaignRepository(Db *sqlx.DB) repositories.CampaignRepository {
 	return &CampaignRepository{Db}
 }
 
-func (cr *CampaignRepository)FindById(id string) (models.Campaign, error) {
+func (cr *CampaignRepository) FindById(id string) (models.Campaign, error) {
 	campaign := models.Campaign{}
 	query := `
 		SELECT
