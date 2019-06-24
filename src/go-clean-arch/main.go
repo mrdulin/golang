@@ -56,10 +56,11 @@ func main() {
 	googleAccountRepo := repositories.NewGoogleAccountRepository(db)
 	locationRepo := repositories.NewLocationRepository(db)
 	googleAccountService := services.NewGoogleAccountService(googleAccountRepo, locationRepo)
-	googleAccounts, err := googleAccountService.FindGoogleAccountsForReport()
+	_, err = googleAccountService.FindGoogleAccountsForReport()
+	//googleAccounts, err := googleAccountService.FindGoogleAccountsForReport()
 	if err != nil {
 		panic(err)
 	}
-	fmt.Printf("%#v", googleAccounts)
+	//fmt.Printf("%#v", googleAccounts)
 
 }
