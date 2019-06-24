@@ -15,8 +15,8 @@ type GoogleAccountService struct {
 	locationRepo *repositories.LocationRepository
 }
 
-func NewGoogleAccountService(googleAccountRepo *repositories.GoogleAccountRepository) IGoogleAccountService {
-	return &GoogleAccountService{googleAccountRepo}
+func NewGoogleAccountService(googleAccountRepo *repositories.GoogleAccountRepository, locationRepo *repositories.LocationRepository) IGoogleAccountService {
+	return &GoogleAccountService{googleAccountRepo, locationRepo}
 }
 
 func (svc *GoogleAccountService) FindGoogleAccountsForReport() ([]models.GoogleAccount, error) {
