@@ -4,7 +4,7 @@ import "time"
 
 type GoogleAccount struct {
 	GoogleAccountId int `db:"google_account_id"`
-	GoogleAccountUserId string `db:"google_account_user_id"`
+	GoogleAccountUserId *string `db:"google_account_user_id" json:",omitempty"`
 	GoogleAccountUserNme string `db:"google_account_user_nme"`
 	GoogleAccountScope string `db:"google_account_scope"`
 	GoogleAccountTokenType string `db:"google_account_token_type"`
@@ -14,7 +14,7 @@ type GoogleAccount struct {
 	GoogleAccountIdToken string `db:"google_account_id_token"`
 	GoogleAccountUserEmail string `db:"google_account_user_email"`
 	GoogleAccountExpiryDate time.Time `db:"google_account_expiry_date"`
-	GoogleAccountConnectedInd bool `db:"google_account_connected_bool"`
+	GoogleAccountConnectedInd bool `db:"google_account_connected_ind"`
 	OrganizationId int `db:"organization_id"`
 	GoogleAccountDefaultCustomerId string `db:"google_account_default_customer_id"`
 

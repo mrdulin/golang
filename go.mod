@@ -10,4 +10,5 @@ require (
 	github.com/jmoiron/sqlx v1.2.0
 	github.com/lib/pq v1.1.1
 	github.com/pkg/errors v0.8.0
+	github.com/spf13/viper v1.4.0
 )
