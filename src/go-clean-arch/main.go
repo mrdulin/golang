@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/spf13/viper"
+	"go-clean-arch/infrastructure/config"
 	"go-clean-arch/domain/services"
 	"go-clean-arch/infrastructure/database"
 	"go-clean-arch/interfaces/repositories"
@@ -10,15 +10,15 @@ import (
 )
 
 func init() {
-	viper.SetConfigName("config.dev")
-	viper.AddConfigPath("./infrastructure/config")
-	err := viper.ReadInConfig()
-	if err != nil {
-		panic(err)
-	}
+
 }
 
 func main() {
+	appConfig := config.NewApplicationConfig()
+	viper, err := appConfig.Load()
+	if err != nil {
+		log.Fatal(err)
+	}
 	dbConf := database.PGDatabaseConfig{
 		Host: viper.GetString("SQL_HOST"),
 		Port: viper.GetString("SQL_PORT"),
@@ -59,7 +59,6 @@ func main() {
 
 	googleAccountService := services.NewGoogleAccountService(googleAccountRepo, locationRepo)
 	campaignService := services.NewCampaignService(campaignRepo)
-
 	_, err = googleAccountService.FindGoogleAccountsForReport()
 	checkError(err)
 	//log.Printf("%#v", googleAccounts)
@@ -67,6 +66,7 @@ func main() {
 	googleCampaignIds, err := campaignService.FindValidGoogleCampaignIds()
 	checkError(err)
 	log.Printf("%#v", googleCampaignIds)
+
 }
 
 func checkError(err error) {

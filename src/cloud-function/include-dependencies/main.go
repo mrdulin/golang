@@ -6,12 +6,13 @@ import (
 	"google.golang.org/api/iterator"
 	"log"
 	"net/http"
+	"os"
 
 	"cloud.google.com/go/storage"
 )
 
-const (
-	ProjectId = "shadowsocks-218808"
+var (
+	ProjectId = os.Getenv("GCP_PROJECT")
 )
 
 func getBucketAttrs()([]*storage.BucketAttrs, error) {
@@ -54,5 +55,5 @@ func IncludedependenciesTest(w http.ResponseWriter, req *http.Request) {
 	}
 	var bucketNames = getBucketNames(bucketAttrsSlice)
 	log.Printf("%#v", bucketNames)
-	fmt.Fprintf(w, "%#v", bucketNames)
+	_, _ = fmt.Fprintf(w, "%#v", bucketNames)
 }
