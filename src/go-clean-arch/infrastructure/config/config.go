@@ -8,8 +8,14 @@ import (
 	"runtime"
 )
 
+type ConfigSource string
+
+const (
+	DataStore ConfigSource = "datastore"
+	Os        ConfigSource = "os"
+)
+
 type IApplicationConfig interface {
-	//Load() (*viper.Viper, error)
 	Load() (*ApplicationConfig, error)
 }
 
@@ -19,7 +25,7 @@ type ApplicationConfig struct {
 	ClientCustomerId                                            int
 }
 
-func NewApplicationConfig() (*ApplicationConfig, error) {
+func NewApplicationConfig(configSource ConfigSource) (*ApplicationConfig, error) {
 	if os.Getenv("env") != "production" {
 		v := viper.New()
 		_, b, _, _ := runtime.Caller(0)
@@ -42,13 +48,19 @@ func NewApplicationConfig() (*ApplicationConfig, error) {
 			RefreshToken:     v.GetString("RefreshToken"),
 		}, nil
 	} else {
-		return &ApplicationConfig{
-			SqlHost:      os.Getenv("SQL_HOST"),
-			SqlPort:      os.Getenv("SQL_PORT"),
-			SqlUser:      os.Getenv("SQL_USER"),
-			SqlPassword:  os.Getenv("SQL_PASSWORD"),
-			SqlDb:        os.Getenv("SQL_DB"),
-			AdChannelApi: os.Getenv("AD_CHANNEL_API"),
-		}, nil
+		switch configSource {
+		case Os:
+			return &ApplicationConfig{
+				SqlHost:      os.Getenv("SQL_HOST"),
+				SqlPort:      os.Getenv("SQL_PORT"),
+				SqlUser:      os.Getenv("SQL_USER"),
+				SqlPassword:  os.Getenv("SQL_PASSWORD"),
+				SqlDb:        os.Getenv("SQL_DB"),
+				AdChannelApi: os.Getenv("AD_CHANNEL_API"),
+			}, nil
+		case DataStore:
+			// TODO: invoke datastore service
+		}
+
 	}
 }

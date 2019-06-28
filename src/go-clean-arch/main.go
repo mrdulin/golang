@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"go-clean-arch/infrastructure/config"
 	"go-clean-arch/domain/services"
+	"go-clean-arch/infrastructure/config"
 	"go-clean-arch/infrastructure/database"
 	"go-clean-arch/interfaces/repositories"
 	"log"
@@ -14,24 +14,23 @@ func init() {
 }
 
 func main() {
-	appConfig := config.NewApplicationConfig()
-	viper, err := appConfig.Load()
+	appConfig, err := config.NewApplicationConfig()
 	if err != nil {
 		log.Fatal(err)
 	}
 	dbConf := database.PGDatabaseConfig{
-		Host: viper.GetString("SQL_HOST"),
-		Port: viper.GetString("SQL_PORT"),
-		User: viper.GetString("SQL_USER"),
-		Password: viper.GetString("SQL_PASSWORD"),
-		Dbname: viper.GetString("SQL_DB"),
+		Host:     appConfig.SqlHost,
+		Port:     appConfig.SqlPort,
+		User:     appConfig.SqlUser,
+		Password: appConfig.SqlPassword,
+		Dbname:   appConfig.SqlDb,
 	}
 	db, err := database.ConnectPGDatabase(&dbConf)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	defer func () {
+	defer func() {
 		if err := recover(); err != nil {
 			fmt.Printf("%+v\n", err)
 		}
