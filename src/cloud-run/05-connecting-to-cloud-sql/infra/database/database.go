@@ -17,7 +17,7 @@ func Connect() (*sqlx.DB, error) {
 		os.Getenv("SQL_DB"),
 	}
 
-	dataSourceName := fmt.Sprintf("host=/cloudsql/%s user=%s password=%s dbname=%s sslmode=disable", conf.SQL_INSTANCE_CONNECTION_NAME, conf.SQL_USER, conf.SQL_PASSWORD, conf.SQL_DB)
+	dataSourceName := fmt.Sprintf("user=%s password=%s dbname=%s host=/cloudsql/%s sslmode=disable", conf.SQL_USER, conf.SQL_PASSWORD, conf.SQL_DB, conf.SQL_INSTANCE_CONNECTION_NAME)
 	driverName := "postgres"
 	db, err := sqlx.Connect(driverName, dataSourceName)
 	if err != nil {
