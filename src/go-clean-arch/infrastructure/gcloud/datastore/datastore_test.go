@@ -4,7 +4,7 @@ import (
 	"testing"
 )
 
-var options = DataStoreServiceOptions{""}
+var options = ServiceOptions{""}
 
 func TestDataStoreService_GetEnvVars(t *testing.T) {
 	dataStoreService, err := NewDataStoreService(&options)

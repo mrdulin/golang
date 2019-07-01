@@ -3,16 +3,17 @@ package config
 import (
 	"github.com/pkg/errors"
 	"github.com/spf13/viper"
+	"go-clean-arch/infrastructure/gcloud/datastore"
 	"os"
 	"path/filepath"
 	"runtime"
 )
 
-type ConfigSource string
+type Source string
 
 const (
-	DataStore ConfigSource = "datastore"
-	Os        ConfigSource = "os"
+	DataStore Source = "dataStore"
+	Os        Source = "os"
 )
 
 type IApplicationConfig interface {
@@ -25,7 +26,7 @@ type ApplicationConfig struct {
 	ClientCustomerId                                            int
 }
 
-func NewApplicationConfig(configSource ConfigSource) (*ApplicationConfig, error) {
+func New(configSource Source, dataStoreService datastore.IDataStoreService) (*ApplicationConfig, error) {
 	if os.Getenv("env") != "production" {
 		v := viper.New()
 		_, b, _, _ := runtime.Caller(0)
@@ -59,8 +60,20 @@ func NewApplicationConfig(configSource ConfigSource) (*ApplicationConfig, error)
 				AdChannelApi: os.Getenv("AD_CHANNEL_API"),
 			}, nil
 		case DataStore:
-			// TODO: invoke datastore service
+			envVars, err := dataStoreService.GetEnvVars()
+			if err != nil {
+				return nil, err
+			}
+			return &ApplicationConfig{
+				SqlHost:      "127.0.0.1",
+				SqlPort:      "5432",
+				SqlDb:        envVars.SQL_DATABASE,
+				SqlUser:      envVars.SQL_USER,
+				SqlPassword:  envVars.SQL_PASSWORD,
+				AdChannelApi: envVars.AD_CHANNEL_API_BASE_URL,
+			}, nil
+		default:
+			return &ApplicationConfig{}, nil
 		}
-
 	}
 }

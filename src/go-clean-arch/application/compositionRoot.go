@@ -4,8 +4,10 @@ import (
 	"go-clean-arch/domain/services"
 	"go-clean-arch/infrastructure/config"
 	"go-clean-arch/infrastructure/database"
+	"go-clean-arch/infrastructure/gcloud/datastore"
 	"go-clean-arch/interfaces/repositories"
 	"log"
+	"os"
 )
 
 type CompositionRoot struct {
@@ -13,11 +15,16 @@ type CompositionRoot struct {
 
 	CampaignService       services.ICampaignService
 	CampaignResultService services.ICampaignResultService
-	googleAccountService  services.IGoogleAccountService
+	GoogleAccountService  services.IGoogleAccountService
+
+	DataStoreService datastore.IDataStoreService
 }
 
 func NewCompositionRoot() *CompositionRoot {
-	appConfig, err := config.NewApplicationConfig()
+	dataStoreOptions := datastore.Options{ProjectID: os.Getenv("GCP_PROJECT")}
+	dataStoreService, err := datastore.New(&dataStoreOptions)
+
+	appConfig, err := config.New("dataStore", dataStoreService)
 	if err != nil {
 		log.Fatalf("%+v", err)
 	}
@@ -48,5 +55,6 @@ func NewCompositionRoot() *CompositionRoot {
 		campaignService,
 		campaignResultService,
 		googleAccountService,
+		dataStoreService,
 	}
 }

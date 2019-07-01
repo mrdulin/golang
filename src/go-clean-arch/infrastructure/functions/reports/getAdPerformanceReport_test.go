@@ -2,7 +2,7 @@ package reports
 
 import (
 	"context"
-	"go-clean-arch/domain/models/googleCloud/functions"
+	"go-clean-arch/domain/models/gcloud/functions"
 	"testing"
 )
 

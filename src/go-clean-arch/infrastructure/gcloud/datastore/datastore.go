@@ -28,26 +28,26 @@ type IDataStoreService interface {
 	GetEnvVars() (*EnvVarEntity, error)
 }
 
-type DataStoreService struct {
-	options *DataStoreServiceOptions
+type Service struct {
+	options *Options
 	client  *datastore.Client
 	ctx     context.Context
 }
 
-type DataStoreServiceOptions struct {
-	projectID string
+type Options struct {
+	ProjectID string
 }
 
-func NewDataStoreService(options *DataStoreServiceOptions) (IDataStoreService, error) {
+func New(options *Options) (IDataStoreService, error) {
 	ctx := context.Background()
-	client, err := datastore.NewClient(ctx, options.projectID)
+	client, err := datastore.NewClient(ctx, options.ProjectID)
 	if err != nil {
 		return nil, err
 	}
-	return &DataStoreService{options, client, ctx}, nil
+	return &Service{options, client, ctx}, nil
 }
 
-func (svc *DataStoreService) GetEnvVars() (*EnvVarEntity, error) {
+func (svc *Service) GetEnvVars() (*EnvVarEntity, error) {
 	var envVarEntities []EnvVarEntity
 	kind := "envVars"
 	q := datastore.NewQuery(kind)

@@ -3,7 +3,7 @@ package reports
 import (
 	"context"
 	"go-clean-arch/application"
-	"go-clean-arch/domain/models/googleCloud/functions"
+	"go-clean-arch/domain/models/gcloud/functions"
 )
 
 var compositionRoot *application.CompositionRoot
@@ -13,7 +13,11 @@ func init() {
 }
 
 func GetAdPerformanceReport(_ context.Context, _ functions.PubSubMessage) error {
-	adPerformanceReportUseCase := application.NewAdPerformanceReportUseCase(compositionRoot.CampaignService, compositionRoot.CampaignResultService, compositionRoot.AppConfig)
+	adPerformanceReportUseCase := application.NewAdPerformanceReportUseCase(
+		compositionRoot.CampaignService,
+		compositionRoot.CampaignResultService,
+		compositionRoot.AppConfig,
+	)
 	if err := adPerformanceReportUseCase.Get(); err != nil {
 		return err
 	}
