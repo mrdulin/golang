@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-PACKAGE=serverlessfns
-FUNCTION=GetAdPerformanceReport
+source=./infrastructure/functions
 
-#gcloud functions deploy ${PACKAGE} --entry-point ${FUNCTION} --runtime go111 --trigger-topic get-ad-performance-report
-gcloud functions deploy ${FUNCTION} --runtime go111 --trigger-topic get-ad-performance-report
+export GO111MODULE=on
+
+${source}/getAdPerformanceReport/deploy.sh

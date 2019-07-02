@@ -1,6 +1,7 @@
 package config
 
 import (
+	"fmt"
 	"github.com/pkg/errors"
 	"github.com/spf13/viper"
 	"go-clean-arch/infrastructure/gcloud/datastore"
@@ -21,13 +22,14 @@ type IApplicationConfig interface {
 }
 
 type ApplicationConfig struct {
-	SqlHost, SqlPort, SqlUser, SqlPassword, SqlDb, AdChannelApi string
-	RefreshToken                                                string
-	ClientCustomerId                                            int
+	SqlInstanceConnectionName, SqlHost, SqlPort, SqlUser, SqlPassword, SqlDb, AdChannelApi string
+	RefreshToken                                                                           string
+	ClientCustomerId                                                                       int
 }
 
 func New(configSource Source, dataStoreService datastore.IDataStoreService) (*ApplicationConfig, error) {
-	if os.Getenv("env") != "production" {
+	if os.Getenv("ENV") != "production" {
+		fmt.Println("load env vars from local fs env file")
 		v := viper.New()
 		_, b, _, _ := runtime.Caller(0)
 		basePath := filepath.Dir(b)
@@ -51,6 +53,7 @@ func New(configSource Source, dataStoreService datastore.IDataStoreService) (*Ap
 	} else {
 		switch configSource {
 		case Os:
+			fmt.Printf("load env vars from OS")
 			return &ApplicationConfig{
 				SqlHost:      os.Getenv("SQL_HOST"),
 				SqlPort:      os.Getenv("SQL_PORT"),
@@ -60,17 +63,17 @@ func New(configSource Source, dataStoreService datastore.IDataStoreService) (*Ap
 				AdChannelApi: os.Getenv("AD_CHANNEL_API"),
 			}, nil
 		case DataStore:
+			fmt.Println("load env vars from dataStore")
 			envVars, err := dataStoreService.GetEnvVars()
 			if err != nil {
 				return nil, err
 			}
 			return &ApplicationConfig{
-				SqlHost:      "127.0.0.1",
-				SqlPort:      "5432",
-				SqlDb:        envVars.SQL_DATABASE,
-				SqlUser:      envVars.SQL_USER,
-				SqlPassword:  envVars.SQL_PASSWORD,
-				AdChannelApi: envVars.AD_CHANNEL_API_BASE_URL,
+				SqlInstanceConnectionName: envVars.SQL_INSTANCE_CONNECTION_NAME,
+				SqlDb:                     envVars.SQL_DATABASE,
+				SqlUser:                   envVars.SQL_USER,
+				SqlPassword:               envVars.SQL_PASSWORD,
+				AdChannelApi:              envVars.AD_CHANNEL_API_BASE_URL,
 			}, nil
 		default:
 			return &ApplicationConfig{}, nil

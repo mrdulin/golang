@@ -7,21 +7,22 @@ import (
 )
 
 type EnvVarEntity struct {
-	AD_CHANNEL_API_BASE_URL  string
-	APPLICATION_URL          string
-	DAILY_REPORT_FROM        string
-	DAILY_REPORT_TO          string
-	DEVELOPMENT_BUILD        string
-	FB_X_API_KEY             string
-	INSTANCE_CONNECTION_NAME string
-	SENDGRID_API_KEY         string
-	SENDGRID_CC              string
-	SENDGRID_FROM            string
-	SENDGRID_TO              string
-	SQL_DATABASE             string
-	SQL_PASSWORD             string
-	SQL_USER                 string
-	STORAGE_BUCKET_NAME      string
+	AD_CHANNEL_API_BASE_URL      string
+	APPLICATION_URL              string
+	DAILY_REPORT_FROM            string
+	DAILY_REPORT_TO              string
+	DEVELOPMENT_BUILD            string
+	FB_X_API_KEY                 string
+	INSTANCE_CONNECTION_NAME     string
+	SENDGRID_API_KEY             string
+	SENDGRID_CC                  string
+	SENDGRID_FROM                string
+	SENDGRID_TO                  string
+	SQL_DATABASE                 string
+	SQL_PASSWORD                 string
+	SQL_USER                     string
+	STORAGE_BUCKET_NAME          string
+	SQL_INSTANCE_CONNECTION_NAME string
 }
 
 type IDataStoreService interface {

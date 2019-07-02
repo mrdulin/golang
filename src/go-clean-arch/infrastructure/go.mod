@@ -1,0 +1,1 @@
+module go-clean-arch/infrastructure

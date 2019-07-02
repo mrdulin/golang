@@ -1,6 +1,7 @@
 package application
 
 import (
+	"fmt"
 	"go-clean-arch/domain/services"
 	"go-clean-arch/infrastructure/config"
 	"go-clean-arch/infrastructure/database"
@@ -28,9 +29,11 @@ func NewCompositionRoot() *CompositionRoot {
 	if err != nil {
 		log.Fatalf("%+v", err)
 	}
+	fmt.Printf("env: %#v", os.Getenv("ENV"))
+	fmt.Printf("application config: %#v", appConfig)
+
 	dbConf := database.PGDatabaseConfig{
-		Host:     appConfig.SqlHost,
-		Port:     appConfig.SqlPort,
+		Host:     fmt.Sprintf("/cloudsql/%s", appConfig.SqlInstanceConnectionName),
 		User:     appConfig.SqlUser,
 		Password: appConfig.SqlPassword,
 		Dbname:   appConfig.SqlDb,
