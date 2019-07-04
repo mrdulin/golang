@@ -18,19 +18,23 @@ type CompositionRoot struct {
 	CampaignResultService services.ICampaignResultService
 	GoogleAccountService  services.IGoogleAccountService
 
-	DataStoreService datastore.IDataStoreService
+	DataStoreService datastore.IService
 }
 
 func NewCompositionRoot() *CompositionRoot {
-	dataStoreOptions := datastore.Options{ProjectID: os.Getenv("GCP_PROJECT")}
+	projectId := os.Getenv("GCP_PROJECT")
+	fmt.Printf("projectId: %#v\n", projectId)
+	dataStoreOptions := datastore.Options{ProjectID: projectId}
 	dataStoreService, err := datastore.New(&dataStoreOptions)
-
+	if err != nil {
+		log.Fatalf("%+v\n", err)
+	}
 	appConfig, err := config.New("dataStore", dataStoreService)
 	if err != nil {
-		log.Fatalf("%+v", err)
+		log.Fatalf("%+v\n", err)
 	}
-	fmt.Printf("env: %#v", os.Getenv("ENV"))
-	fmt.Printf("application config: %#v", appConfig)
+	fmt.Printf("env: %#v\n", os.Getenv("ENV"))
+	fmt.Printf("application config: %#v\n", appConfig)
 
 	dbConf := database.PGDatabaseConfig{
 		Host:     fmt.Sprintf("/cloudsql/%s", appConfig.SqlInstanceConnectionName),
@@ -40,7 +44,7 @@ func NewCompositionRoot() *CompositionRoot {
 	}
 	db, err := database.ConnectPGDatabase(&dbConf)
 	if err != nil {
-		log.Fatalf("%+v", err)
+		log.Fatalf("%+v\n", err)
 	}
 	// repositories
 	campaignResultRepo := repositories.NewCampaignResultRepository(db)

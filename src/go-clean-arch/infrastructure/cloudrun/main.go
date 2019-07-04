@@ -2,14 +2,14 @@ package main
 
 import (
 	"fmt"
-	cloudrun "go-clean-arch/infrastructure/cloudrun/reports"
+	reports "go-clean-arch/infrastructure/cloudrun/reports"
 	"log"
 	"net/http"
 	"os"
 )
 
 func main() {
-	http.HandleFunc("/google/reports/ad", cloudrun.GetAdPerformanceReport)
+	http.HandleFunc("/google/reports/ad", reports.GetAdPerformanceReport)
 
 	port := os.Getenv("PORT")
 	if port == "" {

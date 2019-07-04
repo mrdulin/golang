@@ -35,7 +35,7 @@ func (uc *AdPerformanceReportUseCase) Get() error {
 	googleCampaignIds, err := uc.campaignService.FindValidGoogleCampaignIds()
 	if err != nil {
 		if err, ok := err.(*models.AppError); ok {
-			fmt.Printf("%v", err)
+			fmt.Printf("%v\n", err)
 			return nil
 		}
 		return err
@@ -59,6 +59,6 @@ func (uc *AdPerformanceReportUseCase) Get() error {
 		return err
 	}
 
-	log.Printf("update status transaction done")
+	log.Printf("update status transaction done\n")
 	return nil
 }

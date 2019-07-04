@@ -27,7 +27,7 @@ type ApplicationConfig struct {
 	ClientCustomerId                                                                       int
 }
 
-func New(configSource Source, dataStoreService datastore.IDataStoreService) (*ApplicationConfig, error) {
+func New(configSource Source, dataStoreService datastore.IService) (*ApplicationConfig, error) {
 	if os.Getenv("ENV") != "production" {
 		fmt.Println("load env vars from local fs env file")
 		v := viper.New()
@@ -53,7 +53,7 @@ func New(configSource Source, dataStoreService datastore.IDataStoreService) (*Ap
 	} else {
 		switch configSource {
 		case Os:
-			fmt.Printf("load env vars from OS")
+			fmt.Println("load env vars from OS")
 			return &ApplicationConfig{
 				SqlHost:      os.Getenv("SQL_HOST"),
 				SqlPort:      os.Getenv("SQL_PORT"),

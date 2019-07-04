@@ -17,3 +17,5 @@ k8s
 
 vendor
 config.*.json
+bin
+pkg

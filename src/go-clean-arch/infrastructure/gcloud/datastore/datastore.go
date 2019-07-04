@@ -3,6 +3,7 @@ package datastore
 import (
 	"cloud.google.com/go/datastore"
 	"context"
+	"fmt"
 	"github.com/pkg/errors"
 )
 
@@ -25,7 +26,7 @@ type EnvVarEntity struct {
 	SQL_INSTANCE_CONNECTION_NAME string
 }
 
-type IDataStoreService interface {
+type IService interface {
 	GetEnvVars() (*EnvVarEntity, error)
 }
 
@@ -39,11 +40,12 @@ type Options struct {
 	ProjectID string
 }
 
-func New(options *Options) (IDataStoreService, error) {
+func New(options *Options) (*Service, error) {
 	ctx := context.Background()
+	fmt.Printf("Options: %#v", options)
 	client, err := datastore.NewClient(ctx, options.ProjectID)
 	if err != nil {
-		return nil, err
+		return nil, errors.Wrap(err, "datastore.NewClient")
 	}
 	return &Service{options, client, ctx}, nil
 }
@@ -55,6 +57,6 @@ func (svc *Service) GetEnvVars() (*EnvVarEntity, error) {
 	if _, err := svc.client.GetAll(svc.ctx, q, &envVarEntities); err != nil {
 		return nil, errors.Wrap(err, "svc.client.GetAll(svc.ctx, q, &entities)")
 	}
-
-	return &envVarEntities[0], nil
+	envVarEntity := envVarEntities[0]
+	return &envVarEntity, nil
 }
