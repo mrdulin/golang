@@ -1,2 +1,5 @@
 .git
 .gitignore
+
+go.mod
+go.sum

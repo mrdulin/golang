@@ -3,4 +3,4 @@
 function=CloudStorageTriggerTest
 bucket=ez2on
 
-gcloud functions deploy ${function} --runtime go111 --trigger-resource ${bucket} --trigger-event google.storage.object.finalize
+go mod vendor && gcloud functions deploy ${function} --runtime go111 --trigger-resource ${bucket} --trigger-event google.storage.object.finalize --set-env-vars bucket=ez2on
