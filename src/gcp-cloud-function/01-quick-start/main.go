@@ -7,5 +7,5 @@ import (
 
 // HelloGet is an HTTP Cloud Function.
 func HelloGet(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprint(w, "Hello, World")
+	fmt.Fprint(w, "Hello, slideshowp2")
 }
