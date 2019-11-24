@@ -50,7 +50,7 @@ func structValues(s interface{}) []interface{} {
 		f := val.FieldByName(name)
 		fmt.Printf("%v can set = %v\n", name, f.CanSet())
 		if f.CanSet() {
-			values = append(values, val.Field(i).Interface())
+			values = append(values, val.Field(i).CanInterface())
 		}
 	}
 	return values
