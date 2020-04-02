@@ -10,6 +10,7 @@ require (
 	github.com/corpix/uarand v0.1.1
 	github.com/fsnotify/fsnotify v1.4.7
 	github.com/google/uuid v1.1.1
+	github.com/graphql-go/graphql v0.7.9 // indirect
 	github.com/icrowley/fake v0.0.0-20180203215853-4178557ae428
 	github.com/jinzhu/gorm v1.9.11
 	github.com/jmoiron/sqlx v1.2.0
