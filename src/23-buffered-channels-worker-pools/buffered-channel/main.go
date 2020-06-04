@@ -14,7 +14,7 @@ func simpleSample() {
 	fmt.Println(<-ch)
 }
 
-func write(ch chan int) {
+func write(ch chan<- int) {
 	for i := 0; i < 5; i++ {
 		ch <- i
 		fmt.Println("successfully wrote", i, "to ch")
@@ -53,7 +53,7 @@ func capacityAndLength() {
 
 func main() {
 	// simpleSample()
-	// complexSample()
+	complexSample()
 	// deadLock()
-	capacityAndLength()
+	// capacityAndLength()
 }
