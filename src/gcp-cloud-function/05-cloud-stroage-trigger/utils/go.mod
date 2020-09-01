@@ -1,1 +1,0 @@
-module gcp-cloud-function/05-cloud-stroage-trigger/utils
