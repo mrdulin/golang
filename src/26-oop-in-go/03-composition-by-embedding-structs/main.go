@@ -1,6 +1,6 @@
 package main
 
-import "26-oop-in-go/03-composition-by-embedding-structs/models"
+import "github.com/mrdulin/golang/src/26-oop-in-go/03-composition-by-embedding-structs/models"
 
 func main() {
 	author1 := models.Author{

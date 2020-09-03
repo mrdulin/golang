@@ -1,9 +1,10 @@
 package main
 
 import (
-	"decode-encode/decode-json-stream/jsonextend"
 	"encoding/json"
 	"fmt"
+
+	"github.com/mrdulin/golang/src/decode-encode/decode-json-stream/jsonextend"
 )
 
 // Message is used to store json data

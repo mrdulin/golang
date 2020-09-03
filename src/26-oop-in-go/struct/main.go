@@ -2,7 +2,8 @@ package main
 
 import (
 	"fmt"
-	entities "struct/entities"
+
+	entities "github.com/mrdulin/golang/src/26-oop-in-go/struct/entities"
 )
 
 func main() {

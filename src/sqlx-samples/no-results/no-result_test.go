@@ -1,10 +1,11 @@
 package no_results
 
 import (
-	"github.com/jmoiron/sqlx"
 	"log"
-	"sqlx-samples/database"
 	"testing"
+
+	"github.com/jmoiron/sqlx"
+	"github.com/mrdulin/golang/src/sqlx-samples/database"
 )
 
 var (

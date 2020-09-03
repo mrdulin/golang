@@ -2,8 +2,9 @@ package transaction
 
 import (
 	"log"
-	"sqlx-samples/database"
 	"testing"
+
+	"github.com/mrdulin/golang/src/sqlx-samples/database"
 )
 
 var (

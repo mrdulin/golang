@@ -2,7 +2,8 @@ package main
 
 import (
 	"fmt"
-	"issue-32762/domain/models"
+
+	"github.com/mrdulin/golang/src/issue-32762/domain/models"
 )
 
 func main() {

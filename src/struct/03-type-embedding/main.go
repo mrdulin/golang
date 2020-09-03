@@ -2,7 +2,8 @@ package main
 
 import (
 	"fmt"
-	"type-embedding/report"
+
+	"github.com/mrdulin/golang/src/struct/03-type-embedding/report"
 )
 
 func main() {

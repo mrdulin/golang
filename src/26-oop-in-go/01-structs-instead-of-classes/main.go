@@ -1,6 +1,6 @@
 package main
 
-import "26-oop-in-go/01-structs-instead-of-classes/employee"
+import "github.com/mrdulin/golang/src/26-oop-in-go/01-structs-instead-of-classes/employee"
 
 func main() {
 	e := employee.Employee{
