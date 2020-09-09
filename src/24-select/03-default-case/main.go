@@ -18,7 +18,6 @@ func main() {
 		select {
 		case rval := <-ch:
 			fmt.Println(rval)
-			return
 		default:
 			fmt.Println("no value received")
 		}
