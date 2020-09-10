@@ -5,7 +5,9 @@ import (
 )
 
 type Promiser interface {
-	AllSettled(iterable []Workload) []*Result
+	AllSettled(iterable []Workload) []Result
+	All(iterable []Workload) []Result
+	Race(iterable []Workload) *Result
 }
 
 type promise struct {
@@ -79,4 +81,19 @@ func (p *promise) All(iterable []Workload) []Result {
 			}
 		}
 	}
+}
+
+func (p *promise) Race(iterable []Workload) *Result {
+	if len(iterable) == 0 {
+		return nil
+	}
+	c := make(chan *Result, len(iterable))
+	for _, iter := range iterable {
+		iter := iter
+		go func() {
+			r := Result{R: iter()}
+			c <- &r
+		}()
+	}
+	return <-c
 }
