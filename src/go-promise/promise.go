@@ -53,7 +53,7 @@ func (p *promise) All(iterable []Workload) []Result {
 		return nil
 	}
 	c := make(chan Result, len(iterable))
-	errc := make(chan Result, 1)
+	errc := make(chan Result, len(iterable))
 	r := []Result{}
 	for idx, iter := range iterable {
 		iter := iter

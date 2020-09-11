@@ -3,6 +3,7 @@ package go_promise_test
 import (
 	"errors"
 	"reflect"
+	"runtime"
 	"testing"
 	"time"
 
@@ -23,9 +24,10 @@ func workloadGen(i interface{}, options ...interface{}) go_promise.Workload {
 func TestPromise_AllSettled(t *testing.T) {
 	t.Run("should settle all workloads and return results", func(t *testing.T) {
 		p := go_promise.NewPromise()
-		w1 := workloadGen(1)
-		w2 := workloadGen(2)
-		w3 := workloadGen(3)
+		var d time.Duration = 3
+		w1 := workloadGen(1, d)
+		w2 := workloadGen(2, d)
+		w3 := workloadGen(3, d)
 		ws := []go_promise.Workload{w1, w2, w3}
 		got := p.AllSettled(ws)
 		want := []go_promise.Result{{Idx: 0, R: 1}, {Idx: 1, R: 2}, {Idx: 2, R: 3}}
@@ -61,14 +63,23 @@ func TestPromise_All(t *testing.T) {
 	t.Run("should reject the promise when any workload is rejected", func(t *testing.T) {
 		p := go_promise.NewPromise()
 		err := errors.New("network")
-		w1 := workloadGen(1)
-		w2 := workloadGen(2)
-		w3 := workloadGen(err)
-		ws := []go_promise.Workload{w1, w2, w3}
+		ws := []go_promise.Workload{}
+		for i := 0; i < 100; i++ {
+			ws = append(ws, workloadGen(err))
+		}
+		//w1 := workloadGen(err)
+		//w2 := workloadGen(err)
+		//w3 := workloadGen(err)
+		//ws := []go_promise.Workload{w1, w2, w3}
+		t.Logf("goroutine num: %d", runtime.NumGoroutine())
 		got := p.All(ws)
-		want := []go_promise.Result{{Idx: 2, R: err}}
-		if !reflect.DeepEqual(got, want) {
-			t.Fatalf("got: %+v, want: %+v", got, want)
+		time.Sleep(time.Second * 5)
+		t.Logf("goroutine num: %d", runtime.NumGoroutine())
+		if len(got) != 1 {
+			t.Fatalf("should got one result, got: %+v", len(got))
+		}
+		if !reflect.DeepEqual(got[0].R, err) {
+			t.Fatalf("got: %+v, want: %+v", got, err)
 		}
 	})
 }
